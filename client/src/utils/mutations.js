@@ -1,4 +1,4 @@
-// import { gql } from '@apollo/client';
+import { gql } from '@apollo/client';
 
 // export const GENRES = gql`
 //   mutation addProfile($name: String!, $email: String!, $password: String!) {
