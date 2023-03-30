@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server/server.js",
     "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
-    "install": "npm i && cd client && npm i && cd - && cd server/ && npm i",
+    "install": "cd client && npm i && cd - && cd server/ && npm i",
     "seed": "cd server && npm run seed",
     "build": "cd client && npm run build",
     "clean": "rm -rf node_modules/ package-lock.json && cd client/ && rm -rf node_modules/ package-lock.json && cd ../server/ && rm -rf node_modules package-lock.json && cd -"
