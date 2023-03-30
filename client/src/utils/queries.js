@@ -46,3 +46,23 @@ export async function fetchPlatforms() {
   const { results } = await response.json();
   return results;
 }
+
+
+// Get game reviews
+export const GET_GAME_REVIEWS = gql`
+  query GetGameReviews($id: ID!) {
+    game(id: $id) {
+      name
+      reviews {
+        id
+        text
+        rating
+      }
+    }
+  }
+`;
+export async function fetchRreviews() {
+  const response = await fetch('https://api.rawg.io/api/games/{gameslug}/reviews?key=2bed2a85d5024eb19d9acd647fdc4615');
+  const { results } = await response.json();
+  return results;
+}
