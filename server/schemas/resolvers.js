@@ -8,18 +8,6 @@ const resolvers = {
       return json.results;
     },
   },
-
-  Query: {
-    searchGames: async (parent, { query }) => {
-      try {
-        const response = await axios.get(`https://api.rawg.io/api/games?key=df0a6dbf13504aefb411f7298892a149&search=${query}`);
-        return response.data.results;
-      } catch (error) {
-        console.error(error);
-        return [];
-      }
-    }
-  }
 };
 
 
