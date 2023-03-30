@@ -15,7 +15,7 @@ function GameReviews({ gameSlug }) {
     };
 
     fetchData();
-  }, [gameSlug, apiKey]);
+  }, [gameSlug, API_KEY]);
 
   return (
     <div>
