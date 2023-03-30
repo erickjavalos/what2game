@@ -35,8 +35,23 @@ const typeDefs = gql`
     image_background: String!
   }
 
+  type GameReview {
+    id: ID!
+    text: String!
+    rating: Int!
+  }
+
+  type Game {
+    id: Int!
+    name: String!
+    released: String!
+    background_image: String!
+    website: String!
+  }
+
   type Query {
     genres(page: Int, page_size: Int, ordering: String): [Genre!]!
+
     users: [User]
     user(username: String!): User
     thoughts(username: String): [Thought]
@@ -51,6 +66,7 @@ const typeDefs = gql`
     addComment(thoughtId: ID!, commentText: String!): Thought
     removeThought(thoughtId: ID!): Thought
     removeComment(thoughtId: ID!, commentId: ID!): Thought
+
   }
 `;
 
