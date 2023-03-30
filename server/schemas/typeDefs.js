@@ -34,6 +34,12 @@ const typeDefs = gql`
     games_count: Int!
     image_background: String!
   }
+  type TwitchGame {
+    id: String!
+    name: String!
+    box_art_url: String!
+    igdb_id: String!
+  }
 
   type GameReview {
     id: ID!
@@ -49,9 +55,10 @@ const typeDefs = gql`
     website: String!
   }
 
+
   type Query {
     genres(page: Int, page_size: Int, ordering: String): [Genre!]!
-
+    topTen: [TwitchGame!]!
     users: [User]
     user(username: String!): User
     thoughts(username: String): [Thought]
@@ -68,6 +75,7 @@ const typeDefs = gql`
     removeComment(thoughtId: ID!, commentId: ID!): Thought
 
   }
+  
 `;
 
 module.exports = typeDefs;
