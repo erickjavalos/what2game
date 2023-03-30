@@ -1,64 +1,46 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Header = () => {
-  return (
-    <header>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div className="container">
-      
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
+import Auth from '../../utils/auth';
 
-          <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav">
-              <li className="nav-item">
-                <Link className="nav-link" to="/">
-                  Home
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/search">
-                  Find a Game
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/genres">
-                  Search Genres
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/streams">
-                  Streams
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/reviews">
-                  Game Reviews
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/recommendations">
-                  Recommend a Game
-                </Link>
-              </li>
-            </ul>
-          </div>
+const Header = () => {
+  const logout = (event) => {
+    event.preventDefault();
+    Auth.logout();
+  };
+  return (
+    <header className="bg-primary text-light mb-4 py-3 flex-row align-center">
+      <div className="container flex-row justify-space-between-lg justify-center align-center">
+        <div>
+          <Link className="text-light" to="/">
+            <h1 className="m-0">Tech Thoughts</h1>
+          </Link>
+          <p className="m-0">Get into the mind of a programmer.</p>
         </div>
-      </nav>
+        <div>
+          {Auth.loggedIn() ? (
+            <>
+              <Link className="btn btn-lg btn-info m-2" to="/me">
+                {Auth.getProfile().data.username}'s profile
+              </Link>
+              <button className="btn btn-lg btn-light m-2" onClick={logout}>
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <Link className="btn btn-lg btn-info m-2" to="/login">
+                Login
+              </Link>
+              <Link className="btn btn-lg btn-light m-2" to="/signup">
+                Signup
+              </Link>
+            </>
+          )}
+        </div>
+      </div>
     </header>
   );
 };
 
 export default Header;
-
-
