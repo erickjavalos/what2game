@@ -1,19 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import APIKeyContext from "../APIKeyContext";
+import { API_KEY } from './config';
+
 
 function GameReviews({ gameSlug }) {
   const [reviews, setReviews] = useState([]);
+  const API_KEY = useContext(APIKeyContext);
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(
-        `https://api.rawg.io/api/games/${gameSlug}/reviews?key=<your API key>`
-      );
+      const response = await fetch(`https://api.rawg.io/api/games/${gameSlug}/reviews?key=${API_KEY}`);
       const data = await response.json();
       setReviews(data.results);
     };
 
     fetchData();
-  }, [gameSlug]);
+  }, [gameSlug, apiKey]);
 
   return (
     <div>
