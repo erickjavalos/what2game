@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 
 import ThoughtList from '../components/ThoughtList';
@@ -18,6 +19,9 @@ const Home = () => {
           style={{ border: '1px dotted #1a1a1a' }}
         >
           <ThoughtForm />
+          <Link to="/what2play" className="btn btn-lg btn-info m-2">
+            What2Game
+          </Link>
         </div>
         <div className="col-12 col-md-8 mb-3">
           {loading ? (
