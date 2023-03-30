@@ -15,6 +15,11 @@ import SingleThought from './pages/SingleThought';
 import Profile from './pages/Profile';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import GameDetails from './pages/GameDetails';
+import GameReviews from './pages/GameReviews';
+import Genres from './pages/Genres';
+import SearchGame from './pages/SearchGame';
+import Streams from './pages/Streams';
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -71,6 +76,26 @@ function App() {
               <Route 
                 path="/thoughts/:thoughtId" 
                 element={<SingleThought />}
+              />
+              <Route 
+                path="/game/:gameId" 
+                element={<GameDetails />}
+              />
+              <Route 
+                path="/game/:gameId/reviews" 
+                element={<GameReviews />}
+              />
+              <Route 
+                path="/genres" 
+                element={<Genres />}
+              />
+              <Route 
+                path="/search" 
+                element={<SearchGame />}
+              />
+              <Route 
+                path="/streams" 
+                element={<Streams />}
               />
             </Routes>
           </div>
