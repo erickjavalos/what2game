@@ -1,4 +1,7 @@
 import { gql } from '@apollo/client';
+import { API_KEY } from './config';
+
+
 //single game call
 export const GET_GAMES = gql`
   query GetGames {
@@ -62,7 +65,7 @@ export const GET_GAME_REVIEWS = gql`
   }
 `;
 export async function fetchRreviews() {
-  const response = await fetch(`https://api.rawg.io/api/games/{gameslug}/reviews?key=${API_KEY}`);
+  const response = await fetch(`https://api.rawg.io/api/games/reviews?key=${API_KEY}`);
   const { results } = await response.json();
   return results;
 }
