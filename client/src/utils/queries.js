@@ -12,7 +12,7 @@ export const GET_GAMES = gql`
 `;
 
 export async function fetchGames() {
-  const response = await fetch('https://api.rawg.io/api/games/?key=df0a6dbf13504aefb411f7298892a149');
+  const response = await fetch(`https://api.rawg.io/api/games/?key=${API_KEY}`);
   const { results } = await response.json();
   return results;
 }
@@ -27,7 +27,7 @@ export const GET_GENRES = gql`
 `;
 
 export async function fetchGenres() {
-  const response = await fetch('https://api.rawg.io/api/genres?key=df0a6dbf13504aefb411f7298892a149&ordering=-games_count&page_size=5');
+  const response = await fetch(`https://api.rawg.io/api/genres?key=${API_KEY}&ordering=-games_count&page_size=5`);
   const { results } = await response.json();
   return results;
 }
@@ -42,7 +42,7 @@ export const GET_PLATFORMS = gql`
 `;
 
 export async function fetchPlatforms() {
-  const response = await fetch('https://api.rawg.io/api/platforms?key=df0a6dbf13504aefb411f7298892a149');
+  const response = await fetch(`https://api.rawg.io/api/platforms?key=${API_KEY}`);
   const { results } = await response.json();
   return results;
 }
@@ -62,7 +62,7 @@ export const GET_GAME_REVIEWS = gql`
   }
 `;
 export async function fetchRreviews() {
-  const response = await fetch('https://api.rawg.io/api/games/{gameslug}/reviews?key=2bed2a85d5024eb19d9acd647fdc4615');
+  const response = await fetch(`https://api.rawg.io/api/games/{gameslug}/reviews?key=${API_KEY}`);
   const { results } = await response.json();
   return results;
 }
