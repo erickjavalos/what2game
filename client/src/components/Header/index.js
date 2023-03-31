@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../../index.css'
-import './styles.css'
+import '../../dist/output.css'
+// import '../../index.css'
+// import './styles.css'
 import logo from '../images/logo.png'
 
 import Auth from '../../utils/auth';
@@ -19,21 +20,14 @@ const Header = () => {
   };
   return (
     <>
-      <header className="flex-row align-center" style={{backgroundColor: 'rgb(130,2,99)'}}>
-        <div className="container flex-row mx-auto m-3">
+      <header className="flex flex-row" style={{backgroundColor: 'rgb(130, 2, 99)'}}>
+        <div className="container flex-row justify-space-between-lg justify-center align-center">
           <div>
-            <Link to="/">
-              <img src={logo} style={styles.logo}></img>
-            </Link>
-         </div>
-         <div>
-
-         </div>
-         
-
+            <img src={logo}></img>
+          </div>
         </div>
-
       </header>
+     
     </>
   //   <header className="bg-primary text-light mb-4 py-3 flex-row align-center">
   //     <div className="container flex-row justify-space-between-lg justify-center align-center">

@@ -11,4 +11,10 @@
 
 .justify-flex-start {
     justify-content: flex-start;
-  }
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
