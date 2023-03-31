@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { API_KEY } from './config';
+import { API_KEY } from '../config/config';
 
 const SearchGame = () => {
   const [query, setQuery] = useState("");
