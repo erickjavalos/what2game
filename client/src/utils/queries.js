@@ -1,4 +1,5 @@
 import { gql } from '@apollo/client';
+import { API_KEY } from '../components/config/config';
 //single game call
 export const GET_GAMES = gql`
   query GetGames {
