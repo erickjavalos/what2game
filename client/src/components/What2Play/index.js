@@ -1,98 +1,145 @@
 import React, { useState } from 'react';
+const APIKEY = process.env.REACT_APP_RAWG_API_KEY;
+
+// https://api.rawg.io/api/games?genres=sports&platforms=4&esrb_rating=1&key=df0a6dbf13504aefb411f7298892a149
 
 const What2Play = () => {
-  const [game, setGame] = useState(null);
-  const [questions, setQuestions] = useState([
-    {
-      id: 1,
-      question: 'What genre of game are you in the mood for?',
-      options: ['Action', 'Adventure', 'RPG', 'Simulation', 'Sports', 'Strategy'],
-      selected: [],
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [userSelections, setUserSelections] = useState([]);
+  const [nextButtonEnabled, setNextButtonEnabled] = useState(false);
+  const [gameResults, setGameResults] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const questions = [
+     {
+      text: 'Which genre do you prefer?',
+      paramKey: 'genres',
+      options: [
+        { value: 'action', label: 'Action' },
+        { value: 'adventure', label: 'Adventure' },
+        { value: 'strategy', label: 'Strategy' },
+        { value: 'rpg', label: 'RPG' },
+        { value: 'simulation', label: 'Simulation' },
+        { value: 'sports', label: 'Sports' },
+      ],
     },
     {
-      id: 2,
-      question: 'Do you prefer single-player or multiplayer games?',
-      options: ['Single-Player', 'Multiplayer'],
-      selected: [],
+      text: 'Which platform do you play on?',
+      paramKey: 'platforms',
+      options: [
+        { value: '4', label: 'PC' },
+        { value: '18', label: 'PlayStation 4' },
+        { value: '16', label: 'PlayStation 5' },
+        { value: '1', label: 'Xbox One' },
+        { value: '14', label: 'Xbox Series S/X' },
+        { value: '7', label: 'Nintendo Switch' },
+      ],
     },
     {
-      id: 3,
-      question: 'What platform do you want to play on?',
-      options: ['PC', 'PlayStation', 'Xbox', 'Nintendo Switch'],
-      selected: [],
+      text: 'What is your preferred age rating?',
+      paramKey: 'esrb_rating',
+      options: [
+        { value: '1', label: 'Everyone (E)' },
+        { value: '2', label: 'Everyone 10+ (E10+)' },
+        { value: '3', label: 'Teen (T)' },
+        { value: '4', label: 'Mature 17+ (M)' },
+        { value: '5', label: 'Adults Only 18+ (AO)' },
+      ],
     },
-  ]);
-  const [currentQuestion, setCurrentQuestion] = useState(0);
+  ];
 
-  const handleQuestionChange = (value) => {
-    const newQuestions = [...questions];
-    if (newQuestions[currentQuestion].selected.includes(value)) {
-      newQuestions[currentQuestion].selected = newQuestions[currentQuestion].selected.filter((option) => option !== value);
-    } else {
-      newQuestions[currentQuestion].selected.push(value);
-    }
-    setQuestions(newQuestions);
-  };
+  const handleOptionSelection = (questionIndex, optionValue) => {
+    const updatedSelections = [...userSelections];
+    updatedSelections[questionIndex] = optionValue;
+    setUserSelections(updatedSelections);
+    setNextButtonEnabled(true);  };
 
-  const handleNextQuestion = () => {
-    if (currentQuestion < questions.length - 1) {
-      setCurrentQuestion(currentQuestion + 1);
-    } else {
-      handleSubmit();
-    }
-  };
+  const handleNextButtonClick = () => {
+    setNextButtonEnabled(false);
+    setCurrentQuestionIndex(currentQuestionIndex + 1);  };
 
-  const handleSubmit = async () => {
-    const genre = questions.find((q) => q.id === 1).selected;
-    const platform = questions.find((q) => q.id === 3).selected;
-    const response = await fetch(`https://api.twitch.tv/helix/games/top?first=100&platform=${platform}&genre=${genre}`, {
-      headers: {
-        'Client-ID': '7b5rjeearbqz99sz6f9v2vin4ve7ai',
-        Authorization: `Bearer $"ihxsm7ap5nrhb8zkuuho3bsaz6kuqe"`,
-      },
-    });
-    const data = await response.json();
-    console.log('data:', data); // add this line to log the data variable
-    if (data && data.data && data.data.length > 0) {
-      setGame(data.data[Math.floor(Math.random() * data.data.length)]);
-    } else {
-      console.log('no game data available');
-    }
-  };
+    const handleFindGame = async () => {
+      setLoading(true);
+      
+      const params = userSelections.reduce((acc, selection, index) => {
+        const paramKey = questions[index].paramKey;
+        return { ...acc, [paramKey]: selection };
+      }, {});
+
+      console.log(params)
+    
+      const paramString = new URLSearchParams(params).toString();
+      // turns the object from
+      // { esrb_rating: 1}
+      // to "esrb_rating=1&"
+
+      try {
+        const response = await fetch(`/api/games?${paramString}`);
+        if (!response.ok) {
+          throw new Error(`An error occurred: ${response.statusText}`);
+        }
+        const data = await response.json();
+        console.log(data)
+        setGameResults(data);
+        setLoading(false);
+      } 
+      catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    
+       
+      
+
+      const currentQuestion = questions[currentQuestionIndex];
+      const renderedOptions = currentQuestion.options.map((option) => (
+        <button
+          key={option.value}
+          onClick={() => handleOptionSelection(currentQuestionIndex, option.value)}
+          className="tailwind-button-styles"
+        >
+          {option.label}
+        </button>
+      ));
+      
+
+  const renderedButton = currentQuestionIndex === questions.length - 1 ? (
+    <button
+      onClick={handleFindGame}
+      className="tailwind-button-styles"
+      disabled={!nextButtonEnabled}
+    >
+      Find Game
+    </button>
+  ) : (
+    <button
+      onClick={handleNextButtonClick}
+      className="tailwind-button-styles"
+      disabled={!nextButtonEnabled}
+    >
+      Next Question
+    </button>
+  );
+  console.log('gameResults:', gameResults);
+  const renderedGameResults = gameResults?.results?.map((game) => (
+    <div key={game.id} className="tailwind-game-item-styles">
+      <h3>{game.name}</h3>
+      <img src={game.background_image} alt={game.name} />
+    </div>
+  )) || [];
   
 
+  const loadingIndicator = loading ? (
+    <div className="tailwind-loading-indicator-styles">Loading...</div>
+  ) : null;
+
   return (
-    <div>
-      <h1>Don't Know What to Play?</h1>
-      <div key={questions[currentQuestion].id}>
-        <h2>{questions[currentQuestion].question}</h2>
-        <ul>
-          {questions[currentQuestion].options.map((option) => (
-            <li key={option}>
-              <label>
-                <input
-                  type="checkbox"
-                  name={`question-${questions[currentQuestion].id}`}
-                  value={option}
-                  checked={questions[currentQuestion].selected.includes(option)}
-                  onChange={(e) => handleQuestionChange(e.target.value)}
-                />
-                {option}
-              </label>
-            </li>
-          ))}
-        </ul>
-        <button disabled={!questions[currentQuestion].selected.length} onClick={handleNextQuestion}>
-          Next
-        </button>
-      </div>
-      {game && (
-        <div>
-          <h2>Recommended Game:</h2>
-          <h3>{game.name}</h3>
-          <img src={game.box_art_url.replace('{width}', '300').replace('{height}', '400')} alt={`${game.name} Box Art`} />
-        </div>
-      )}
+    <div className="tailwind-container-styles">
+      <h2 className="text-orange-200">{currentQuestion.text}</h2>
+      {renderedOptions}
+      {renderedButton}
+      {loadingIndicator}
+      {renderedGameResults}
     </div>
   );
 };
