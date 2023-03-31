@@ -8,6 +8,7 @@ const typeDefs = gql`
     releaseDate: String
     publisher: String
     developer: String
+    background_image: String!
     genres: [Genre!]
   }
   type User {
@@ -33,16 +34,6 @@ const typeDefs = gql`
   type Auth {
     token: ID!
     user: User
-  }
-
-  type Genre {
-    id: Int!
-    name: String!
-    description: String!
-    releaseDate: String!
-    publisher: String!
-    developer: String!
-    genres: [Genre!]!
   }
 
   type GameDetails {
@@ -115,19 +106,6 @@ const typeDefs = gql`
     igdb_id: String!
   }
 
-  type GameReview {
-    id: ID!
-    text: String!
-    rating: Int!
-  }
-
-  type Game {
-    id: Int!
-    name: String!
-    released: String!
-    background_image: String!
-    website: String!
-  }
 
 
   type Query {

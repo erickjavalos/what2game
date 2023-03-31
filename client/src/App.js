@@ -15,11 +15,11 @@ import SingleThought from './pages/SingleThought';
 import Profile from './pages/Profile';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import GameDetails from './pages/GameDetails';
-import GameReviews from './pages/GameReviews';
-import Genres from './pages/Genres';
-import SearchGame from './pages/SearchGame';
-import Streams from './pages/Streams';
+import GameDetails from './components/GameDetails';
+import GameReviews from './components/GameReviews';
+import Genres from './components/Genres';
+import SearchGame from './components/SearchGame';
+import Streams from './components/Streams';
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
