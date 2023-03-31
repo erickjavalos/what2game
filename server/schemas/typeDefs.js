@@ -2,90 +2,90 @@ const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
   type Game {
-    id: ID!
-    name: String!
-    description: String!
-    releaseDate: String!
-    publisher: String!
-    developer: String!
-    genres: [Genre!]!
+    id: ID
+    name: String
+    description: String
+    releaseDate: String
+    publisher: String
+    developer: String
+    genres: [Genre!]
   }
 
   type GameDetails {
-    id: ID!
-    name: String!
-    description: String!
-    releaseDate: String!
-    publisher: String!
-    developer: String!
-    genres: [Genre!]!
-    platforms: [String!]!
-    screenshots: [String!]!
-    trailers: [String!]!
-    website: String!
+    id: ID
+    name: String
+    description: String
+    releaseDate: String
+    publisher: String
+    developer: String
+    genres: [Genre!]
+    platforms: [String!]
+    screenshots: [String!]
+    trailers: [String!]
+    website: String
     rating: Float!
   }
 
   type GameReview {
-    id: ID!
-    title: String!
-    body: String!
-    rating: Float!
-    user: User!
-    game: Game!
-    createdAt: String!
+    id: ID
+    title: String
+    body: String
+    rating: Float
+    user: User
+    game: Game
+    createdAt: String
   }
 
   type Genre {
-    id: ID!
-    name: String!
-    games: [Game!]!
+    id: ID
+    name: String
+    games: [Game!]
   }
 
   type Stream {
-    id: ID!
-    title: String!
-    description: String!
-    url: String!
-    user: User!
-    game: Game!
-    createdAt: String!
+    id: ID
+    title: String
+    description: String
+    url: String
+    user: User
+    game: Game
+    createdAt: String
   }
 
   type User {
-    id: ID!
-    username: String!
-    email: String!
-    password: String!
-    thoughts: [Thought!]!
-    friends: [User!]!
-    friendCount: Int!
+    id: ID
+    username: String
+    email: String
+    password: String
+    thoughts: [Thought!]
+    friends: [User!]
+    friendCount: Int
   }
 
   type Thought {
-    id: ID!
-    thoughtText: String!
-    createdAt: String!
-    username: String!
-    game: Game!
+    id: ID
+    thoughtText: String
+    createdAt: String
+    username: String
+    game: Game
   }
 
   type Auth {
-    token: ID!
-    user: User!
+    token: ID
+    user: User
   }
 
   type Query {
-    games: [Game!]!
-    game(id: ID!): GameDetails!
-    gameReviews(gameId: ID!): [GameReview!]!
-    genres: [Genre!]!
-    search(query: String!): [Game!]!
-    streams(gameId: ID!): [Stream!]!
+    games: [Game!]
+    game(id: ID!): GameDetails
+    gameReviews(gameId: ID!): [GameReview!]
+    genres: [Genre!]
+    search(query: String!): [Game!]
+    streams(gameId: ID!): [Stream!]
     me: User
-    users: [User!]!
+    users: [User!]
     user(username: String!): User
-    thoughts(username: String): [Thought!]!
+    thoughts(username: String): [Thought!]
     thought(id: ID!): Thought
   }
 

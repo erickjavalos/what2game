@@ -62,8 +62,9 @@ export const GET_GAME_REVIEWS = gql`
     }
   }
 `;
-export async function fetchRreviews() {
-  const response = await fetch(`https://api.rawg.io/api/games/{gameslug}/reviews?key=${API_KEY}`);
+export async function fetchRreviews(gameslug) {
+  const response = await fetch(`https://api.rawg.io/api/games/${gameslug}/reviews?key=${API_KEY}`);
   const { results } = await response.json();
   return results;
 }
+

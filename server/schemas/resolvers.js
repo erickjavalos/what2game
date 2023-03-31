@@ -1,37 +1,27 @@
 const fetch = require('node-fetch');
 
+const fetchGame = async (id) => {
+  const response = await fetch(`https://api.rawg.io/api/games/${id}?key=df0a6dbf13504aefb411f7298892a149`);
+  const json = await response.json();
+  return json;
+};
+const fetchGamesBySearch = async (query) => {
+  const response = await fetch(`https://api.rawg.io/api/games?key=df0a6dbf13504aefb411f7298892a149&search=${query}`);
+  const json = await response.json();
+  return json.results;
+};
+const fetchGenres = async () => {
+  const response = await fetch('https://api.rawg.io/api/genres?key=df0a6dbf13504aefb411f7298892a149&ordering=-games_count&page_size=10');
+  const json = await response.json();
+  return json.results;
+};
 const resolvers = {
   Query: {
-    async genres() {
-      const response = await fetch('https://api.rawg.io/api/genres?key=df0a6dbf13504aefb411f7298892a149&ordering=-games_count&page_size=10');
-      const json = await response.json();
-      return json.results;
-    },
-    async game(parent, { id }, context, info) {
-      const response = await fetch(`https://api.rawg.io/api/games/${id}?key=df0a6dbf13504aefb411f7298892a149`);
-      const json = await response.json();
-      return json;
-    },
-    async search(parent, { query }, context, info) {
-      const response = await fetch(`https://api.rawg.io/api/games?key=df0a6dbf13504aefb411f7298892a149&search=${query}`);
-      const json = await response.json();
-      return json.results;
-    },
+    genres: () => fetchGenres(),
+    game: (parent, { id }) => fetchGame(id),
+    search: (parent, { query }) => fetchGamesBySearch(query),
   },
-    Query: {
-      async game(parent, { id }, context, info) {
-        const response = await fetch(`https://api.rawg.io/api/games/${id}?key=df0a6dbf13504aefb411f7298892a149`);
-        const json = await response.json();
-        return json;
-      },
-    },
-    Query: {
-      async search(parent, { query }, context, info) {
-        const response = await fetch(`https://api.rawg.io/api/games?key=df0a6dbf13504aefb411f7298892a149&search=${query}`);
-        const json = await response.json();
-        return json.results;
-      },
-    },
+};
     // Query: {
     //   async streams(parent, { id }, context, info) {
     //     const response = await fetch(`https://api.twitch.tv/helix/streams?game_id=${id}`, {
@@ -44,6 +34,6 @@ const resolvers = {
     //     return json.data;
     //   },
     // },
-};
+
 
 module.exports = resolvers;
