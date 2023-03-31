@@ -21,6 +21,9 @@ import Genres from './pages/Genres';
 import SearchGame from './pages/SearchGame';
 import Streams from './pages/Streams';
 
+import './dist/output.css'
+
+
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -49,7 +52,7 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-        <div className="flex-column justify-flex-start min-100-vh">
+        <div className="flex flex-col">
           <Header />
           <div className="container">
             <Routes>
@@ -101,8 +104,11 @@ function App() {
           </div>
           <Footer />
         </div>
+
       </Router>
     </ApolloProvider>
+  
+   
   );
 }
 
