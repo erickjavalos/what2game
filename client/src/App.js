@@ -15,6 +15,11 @@ import SingleThought from './pages/SingleThought';
 import Profile from './pages/Profile';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import GameDetails from './pages/GameDetails';
+import GameReviews from './pages/GameReviews';
+import Genres from './pages/Genres';
+import SearchGame from './pages/SearchGame';
+import Streams from './pages/Streams';
 
 import './dist/output.css'
 
@@ -49,48 +54,61 @@ function App() {
       <Router>
         <div className="flex flex-col">
           <Header />
-
+          <div className="container">
+            <Routes>
+              <Route 
+                path="/"
+                element={<Home />}
+              />
+              <Route 
+                path="/login" 
+                element={<Login />}
+              />
+              <Route 
+                path="/signup" 
+                element={<Signup />}
+              />
+              <Route 
+                path="/me" 
+                element={<Profile />}
+              />
+              <Route 
+                path="/profiles/:username" 
+                element={<Profile />}
+              />
+              <Route 
+                path="/thoughts/:thoughtId" 
+                element={<SingleThought />}
+              />
+              <Route 
+                path="/game/:gameId" 
+                element={<GameDetails />}
+              />
+              <Route 
+                path="/game/:gameId/reviews" 
+                element={<GameReviews />}
+              />
+              <Route 
+                path="/genres" 
+                element={<Genres />}
+              />
+              <Route 
+                path="/search" 
+                element={<SearchGame />}
+              />
+              <Route 
+                path="/streams" 
+                element={<Streams />}
+              />
+            </Routes>
+          </div>
+          <Footer />
         </div>
 
       </Router>
     </ApolloProvider>
   
-    // <ApolloProvider client={client}>
-    //   <Router>
-    //     <div className="flex-column justify-flex-start min-100-vh">
-    //       <Header />
-    //       <div className="container">
-    //         <Routes>
-    //           <Route 
-    //             path="/"
-    //             element={<Home />}
-    //           />
-    //           <Route 
-    //             path="/login" 
-    //             element={<Login />}
-    //           />
-    //           <Route 
-    //             path="/signup" 
-    //             element={<Signup />}
-    //           />
-    //           <Route 
-    //             path="/me" 
-    //             element={<Profile />}
-    //           />
-    //           <Route 
-    //             path="/profiles/:username" 
-    //             element={<Profile />}
-    //           />
-    //           <Route 
-    //             path="/thoughts/:thoughtId" 
-    //             element={<SingleThought />}
-    //           />
-    //         </Routes>
-    //       </div>
-    //       <Footer />
-    //     </div>
-    //   </Router>
-    // </ApolloProvider>
+   
   );
 }
 
