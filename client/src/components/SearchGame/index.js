@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
+import { API_KEY } from './config';
 
 const SearchGame = () => {
   const [query, setQuery] = useState("");
@@ -6,17 +7,10 @@ const SearchGame = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    try {
-      const response = await fetch(
-        `https://api.rawg.io/api/games?key=df0a6dbf13504aefb411f7298892a149&search=${query}`
-      );
-      const data = await response.json();
-      console.log(data); // Check the data being returned from the API
-      setGames(data.results);
-      setQuery("");
-    } catch (error) {
-      console.log(error); // Check for errors in the fetch request
-    }
+    const response = await fetch(`https://api.rawg.io/api/games?key=${API_KEY}&search=${query}`);
+    const data = await response.json();
+    setGames(data.results);
+    setQuery('');
   };
 
   return (

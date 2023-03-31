@@ -10,6 +10,40 @@ const typeDefs = gql`
     developer: String
     genres: [Genre!]
   }
+  type User {
+    _id: ID
+    username: String
+    email: String
+    password: String
+    thoughts: [Thought]!
+  }
+  type Thought {
+    _id: ID
+    thoughtText: String
+    thoughtAuthor: String
+    createdAt: String
+    comments: [Comment]!
+  }
+  type Comment {
+    _id: ID
+    commentText: String
+    commentAuthor: String
+    createdAt: String
+  }
+  type Auth {
+    token: ID!
+    user: User
+  }
+
+  type Genre {
+    id: Int!
+    name: String!
+    description: String!
+    releaseDate: String!
+    publisher: String!
+    developer: String!
+    genres: [Genre!]!
+  }
 
   type GameDetails {
     id: ID
@@ -74,9 +108,31 @@ const typeDefs = gql`
     token: ID
     user: User
   }
+  type TwitchGame {
+    id: String!
+    name: String!
+    box_art_url: String!
+    igdb_id: String!
+  }
+
+  type GameReview {
+    id: ID!
+    text: String!
+    rating: Int!
+  }
+
+  type Game {
+    id: Int!
+    name: String!
+    released: String!
+    background_image: String!
+    website: String!
+  }
+
 
   type Query {
     games: [Game!]
+    topTen: [TwitchGame!]!
     game(id: ID!): GameDetails
     gameReviews(gameId: ID!): [GameReview!]
     genres: [Genre!]
@@ -97,6 +153,7 @@ const typeDefs = gql`
     removeFriend(friendId: ID!): User
     addGameReview(title: String!, body: String!, rating: Float!, gameId: ID!): GameReview
     deleteGameReview(reviewId: ID!): GameReview
+   
   }
 `;
 
