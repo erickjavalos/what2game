@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 import { API_KEY} from '../components/APIKeyContext'
-//single game call
+// Single game call
 export const GET_GAMES = gql`
   query GetGames {
     games {
@@ -27,6 +27,7 @@ export const GET_GENRES = gql`
   }
 `;
 
+// Get genres
 export async function fetchGenres() {
   const response = await fetch(`https://api.rawg.io/api/genres?key=${API_KEY}&ordering=-games_count&page_size=5`);
   const { results } = await response.json();
@@ -62,8 +63,9 @@ export const GET_GAME_REVIEWS = gql`
     }
   }
 `;
-export async function fetchRreviews() {
-  const response = await fetch(`https://api.rawg.io/api/games/{gameslug}/reviews?key=${API_KEY}`);
+// Get reviews
+export async function fetchReviews(gameSlug) {
+  const response = await fetch(`https://api.rawg.io/api/games/${gameSlug}/reviews?key=${API_KEY}`);
   const { results } = await response.json();
   return results;
 }
