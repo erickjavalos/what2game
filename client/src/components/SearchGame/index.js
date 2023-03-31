@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { API_KEY } from './config';
 
 const SearchGame = () => {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const [games, setGames] = useState([]);
 
   const handleSubmit = async (event) => {
@@ -32,20 +32,33 @@ const SearchGame = () => {
       </form>
       <hr />
       <div className="row">
-        {games.map((game) => (
-          <div className="col-md-4 mb-3" key={game.id}>
-            <div className="card">
-              <img src={game.background_image} className="card-img-top" alt={game.name} />
-              <div className="card-body">
-                <h5 className="card-title">{game.name}</h5>
-                <p className="card-text">{game.released}</p>
-                <a href={game.website} target="_blank" rel="noreferrer" className="btn btn-primary">
-                  Visit Website
-                </a>
+        {games.length > 0 ? (
+          games.map((game) => (
+            <div className="col-md-4 mb-3" key={game.id}>
+              <div className="card">
+                <img
+                  src={game.background_image}
+                  className="card-img-top"
+                  alt={game.name}
+                />
+                <div className="card-body">
+                  <h5 className="card-title">{game.name}</h5>
+                  <p className="card-text">{game.released}</p>
+                  <a
+                    href={game.website}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="btn btn-primary"
+                  >
+                    Visit Website
+                  </a>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <p>No games found.</p>
+        )}
       </div>
     </div>
   );
