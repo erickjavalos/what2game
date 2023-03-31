@@ -9,6 +9,7 @@ import Auth from '../../utils/auth';
 
 const styles = {
   logo: {
+    // backgroundColor: 'rgb(130,2,99)',
     width: '150px'
   }
 }
@@ -20,13 +21,26 @@ const Header = () => {
   };
   return (
     <>
-      <header className="flex flex-row" style={{backgroundColor: 'rgb(130, 2, 99)'}}>
+    <div class="flex flex-row flex-wrap" style={{backgroundColor: 'rgb(130, 2, 99)'}}>
+      <div>
+        <img src={logo} style={styles.logo}></img>
+      </div>
+      {/* <div>
+        
+      </div>
+        Login buttons
+      <div>
+
+      </div> */}
+    </div>
+      {/* <header className="flex flex-row" style={{backgroundColor: 'rgb(130, 2, 99)'}}>
         <div className="container flex-row justify-space-between-lg justify-center align-center">
           <div>
             <img src={logo}></img>
+            <h1> hellow</h1>
           </div>
         </div>
-      </header>
+      </header> */}
      
     </>
   //   <header className="bg-primary text-light mb-4 py-3 flex-row align-center">
