@@ -56,10 +56,10 @@ function App() {
           <Header />
            <div className="container">
             <Routes>
-              {/* <Route 
+              <Route 
                 path="/"
-                element={<Home />}
-              /> */}
+                // element={<Home />}
+              />
               <Route 
                 path="/login" 
                 element={<Login />}
