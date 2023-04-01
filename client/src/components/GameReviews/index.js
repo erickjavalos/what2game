@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import APIKeyContext from "../APIKeyContext";
-import { API_KEY } from '../config/config';
+import { API_KEY } from './config';
 
 
 function GameReviews({ gameSlug }) {
