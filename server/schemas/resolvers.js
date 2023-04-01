@@ -2,13 +2,104 @@ const fetch = require('node-fetch');
 const { AuthenticationError } = require('apollo-server-express');
 const { User, Thought } = require('../models');
 const { signToken } = require('../utils/auth');
+require('dotenv').config()
 
+let clientId = process.env.CLIENT_ID;
+let clientSecret =  process.env.TWITCH_SECRET;
+
+
+
+// twitch authorization request
+function getTwitchAuthorization() {
+  // grab secrets
+
+  let url = `https://id.twitch.tv/oauth2/token?client_id=${clientId}&client_secret=${clientSecret}&grant_type=client_credentials`;
+
+  return fetch(url, {
+  method: "POST",
+  })
+  .then((res) => res.json())
+  .then((data) => {
+      return data;
+  });
+}
+
+const fetchGame = async (id) => {
+  const response = await fetch(`https://api.rawg.io/api/games/${id}?key=df0a6dbf13504aefb411f7298892a149`);
+  const json = await response.json();
+  return json;
+};
+const fetchGamesBySearch = async (query) => {
+  const response = await fetch(`https://api.rawg.io/api/games?key=df0a6dbf13504aefb411f7298892a149&search=${query}`);
+  const json = await response.json();
+  return json.results;
+};
+const fetchGenres = async () => {
+  const response = await fetch('https://api.rawg.io/api/genres?key=df0a6dbf13504aefb411f7298892a149&ordering=-games_count&page_size=10');
+  const json = await response.json();
+  return json.results;
+};
 const resolvers = {
   Query: {
     async genres() {
       const response = await fetch('https://api.rawg.io/api/genres?key=df0a6dbf13504aefb411f7298892a149&ordering=-games_count&page_size=10');
       const json = await response.json();
       return json.results;
+    },
+    async game(parent, { id }, context, info) {
+      const response = await fetch(`https://api.rawg.io/api/games/${id}?key=df0a6dbf13504aefb411f7298892a149`);
+      const json = await response.json();
+      return json;
+    },
+    async search(parent, { query }, context, info) {
+      const response = await fetch(`https://api.rawg.io/api/games?key=df0a6dbf13504aefb411f7298892a149&search=${query}`);
+      const json = await response.json();
+      return json.results;
+    },
+    
+    async topTen() {
+
+      const endpoint = "https://api.twitch.tv/helix/games/top?first=20";
+      let authorizationObject = await getTwitchAuthorization();
+      let { access_token, expires_in, token_type } = authorizationObject;
+
+      //token_type first letter must be uppercase    
+      token_type =
+      token_type.substring(0, 1).toUpperCase() +
+      token_type.substring(1, token_type.length);
+
+      let authorization = `${token_type} ${access_token}`;
+
+      let headers = {
+        authorization,
+        "Client-Id": clientId,
+      };
+
+      const response = await fetch(endpoint, {
+        headers,
+      })
+      // get json response 
+      const json = await response.json()
+
+      // filter out top ten games that have valid igdb ids
+      let cnt = 0;
+      let dataRtn = []
+      for (let i =0; i < json.data.length; i++)
+      {
+        if (cnt >= 10)
+        {
+          i = json.data.length + 1
+        }
+        else if (json.data[i].igdb_id !== "")
+        {
+          // console.log(json.data[i])
+          dataRtn.push(json.data[i])
+          cnt += 1;
+        }
+      }
+      // return the data to graphql
+      return dataRtn
+      
     },
     users: async () => {
       return User.find().populate('thoughts');
@@ -70,57 +161,20 @@ const resolvers = {
       }
       throw new AuthenticationError('You need to be logged in!');
     },
-    addComment: async (parent, { thoughtId, commentText }, context) => {
-      if (context.user) {
-        return Thought.findOneAndUpdate(
-          { _id: thoughtId },
-          {
-            $addToSet: {
-              comments: { commentText, commentAuthor: context.user.username },
-            },
-          },
-          {
-            new: true,
-            runValidators: true,
-          }
-        );
-      }
-      throw new AuthenticationError('You need to be logged in!');
-    },
-    removeThought: async (parent, { thoughtId }, context) => {
-      if (context.user) {
-        const thought = await Thought.findOneAndDelete({
-          _id: thoughtId,
-          thoughtAuthor: context.user.username,
-        });
-
-        await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $pull: { thoughts: thought._id } }
-        );
-
-        return thought;
-      }
-      throw new AuthenticationError('You need to be logged in!');
-    },
-    removeComment: async (parent, { thoughtId, commentId }, context) => {
-      if (context.user) {
-        return Thought.findOneAndUpdate(
-          { _id: thoughtId },
-          {
-            $pull: {
-              comments: {
-                _id: commentId,
-                commentAuthor: context.user.username,
-              },
-            },
-          },
-          { new: true }
-        );
-      }
-      throw new AuthenticationError('You need to be logged in!');
-    },
   },
 };
+    // Query: {
+    //   async streams(parent, { id }, context, info) {
+    //     const response = await fetch(`https://api.twitch.tv/helix/streams?game_id=${id}`, {
+    //       headers: {
+    //         'Client-ID': 'YOUR_TWITCH_CLIENT_ID',
+    //         Authorization: `Bearer YOUR_TWITCH_ACCESS_TOKEN`,
+    //       },
+    //     });
+    //     const json = await response.json();
+    //     return json.data;
+    //   },
+    // },
+
 
 module.exports = resolvers;
