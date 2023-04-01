@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { API_KEY } from '../config/config';
+import { API_KEY } from './config';
 
 
 function GameDetails({ gameSlug }) {

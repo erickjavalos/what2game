@@ -1,16 +1,7 @@
-const { gql } = require('apollo-server-express');
+const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
-  type Game {
-    id: ID
-    name: String
-    description: String
-    releaseDate: String
-    publisher: String
-    developer: String
-    background_image: String!
-    genres: [Genre!]
-  }
+
   type User {
     _id: ID
     username: String
@@ -36,101 +27,30 @@ const typeDefs = gql`
     user: User
   }
 
-  type GameDetails {
-    id: ID
-    name: String
-    description: String
-    releaseDate: String
-    publisher: String
-    developer: String
-    genres: [Genre!]
-    platforms: [String!]
-    screenshots: [String!]
-    trailers: [String!]
-    website: String
-    rating: Float!
-  }
-
-  type GameReview {
-    id: ID
-    title: String
-    body: String
-    rating: Float
-    user: User
-    game: Game
-    createdAt: String
-  }
-
   type Genre {
-    id: ID
-    name: String
-    games: [Game!]
-  }
-
-  type Stream {
-    id: ID
-    title: String
-    description: String
-    url: String
-    user: User
-    game: Game
-    createdAt: String
-  }
-
-  type User {
-    id: ID
-    username: String
-    email: String
-    password: String
-    thoughts: [Thought!]
-    friends: [User!]
-    friendCount: Int
-  }
-
-  type Thought {
-    id: ID
-    thoughtText: String
-    createdAt: String
-    username: String
-    game: Game
-  }
-
-  type Auth {
-    token: ID
-    user: User
-  }
-  type TwitchGame {
-    id: String!
+    id: Int!
     name: String!
-    box_art_url: String!
-    igdb_id: String!
+    slug: String!
+    games_count: Int!
+    image_background: String!
   }
-
 
   type Query {
-    games: [Game!]
-    topTen: [TwitchGame!]!
-    game(id: ID!): GameDetails
-    gameReviews(gameId: ID!): [GameReview!]
-    genres: [Genre!]
-    search(query: String!): [Game!]
-    streams(gameId: ID!): [Stream!]
-    me: User
-    users: [User!]
+    genres(page: Int, page_size: Int, ordering: String): [Genre!]!
+    users: [User]
     user(username: String!): User
-    thoughts(username: String): [Thought!]
-    thought(id: ID!): Thought
+    thoughts(username: String): [Thought]
+    thought(thoughtId: ID!): Thought
+    me: User
   }
 
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    addThought(thoughtText: String!, gameId: ID!): Thought
-    addFriend(friendId: ID!): User
-    removeFriend(friendId: ID!): User
-    addGameReview(title: String!, body: String!, rating: Float!, gameId: ID!): GameReview
-    deleteGameReview(reviewId: ID!): GameReview
-   
+    addThought(thoughtText: String!): Thought
+    addComment(thoughtId: ID!, commentText: String!): Thought
+    removeThought(thoughtId: ID!): Thought
+    removeComment(thoughtId: ID!, commentId: ID!): Thought
   }
 `;
 

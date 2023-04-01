@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { API_KEY } from '../config/config';
 
 const SearchGame = () => {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState('');
   const [games, setGames] = useState([]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const response = await fetch(`https://api.rawg.io/api/games?key=${API_KEY}&search=${query}`);
+    const response = await fetch(`https://api.rawg.io/api/games?key=df0a6dbf13504aefb411f7298892a149&search=${query}`);
     const data = await response.json();
     setGames(data.results);
     setQuery('');
@@ -32,33 +31,20 @@ const SearchGame = () => {
       </form>
       <hr />
       <div className="row">
-        {games.length > 0 ? (
-          games.map((game) => (
-            <div className="col-md-4 mb-3" key={game.id}>
-              <div className="card">
-                <img
-                  src={game.background_image}
-                  className="card-img-top"
-                  alt={game.name}
-                />
-                <div className="card-body">
-                  <h5 className="card-title">{game.name}</h5>
-                  <p className="card-text">{game.released}</p>
-                  <a
-                    href={game.website}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="btn btn-primary"
-                  >
-                    Visit Website
-                  </a>
-                </div>
+        {games.map((game) => (
+          <div className="col-md-4 mb-3" key={game.id}>
+            <div className="card">
+              <img src={game.background_image} className="card-img-top" alt={game.name} />
+              <div className="card-body">
+                <h5 className="card-title">{game.name}</h5>
+                <p className="card-text">{game.released}</p>
+                <a href={game.website} target="_blank" rel="noreferrer" className="btn btn-primary">
+                  Visit Website
+                </a>
               </div>
             </div>
-          ))
-        ) : (
-          <p>No games found.</p>
-        )}
+          </div>
+        ))}
       </div>
     </div>
   );
