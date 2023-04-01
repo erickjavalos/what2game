@@ -82,3 +82,13 @@ main {
 .submitForm {
     padding-bottom: 60px;
 }
+
+.submitForm input{
+    color: #2E294E;
+    background-color: #eadeda;
+    padding-left: 20px;
+    font-family: 'FontAwesome', 'Arial';
+}
+.title {
+    font-size: 38px;
+}
