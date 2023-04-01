@@ -15,7 +15,7 @@ import SingleThought from './pages/SingleThought';
 import Profile from './pages/Profile';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import What2Play from './components/What2Play';
+import What2Play from './pages/What2Play/What2Play';
 
 const httpLink = createHttpLink({
   uri: '/graphql',

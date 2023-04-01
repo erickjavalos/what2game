@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-const APIKEY = process.env.REACT_APP_RAWG_API_KEY;
+import './What2Play.css';
 
-// https://api.rawg.io/api/games?genres=sports&platforms=4&esrb_rating=1&key=df0a6dbf13504aefb411f7298892a149
+// const APIKEY = process.env.REACT_APP_RAWG_API_KEY;
 
 const What2Play = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -69,10 +69,7 @@ const What2Play = () => {
       console.log(params)
     
       const paramString = new URLSearchParams(params).toString();
-      // turns the object from
-      // { esrb_rating: 1}
-      // to "esrb_rating=1&"
-
+  
       try {
         const response = await fetch(`/api/games?${paramString}`);
         if (!response.ok) {
@@ -87,20 +84,23 @@ const What2Play = () => {
         console.error('Error fetching data:', error);
       }
     };
-    
-       
-      
-
+  
       const currentQuestion = questions[currentQuestionIndex];
-      const renderedOptions = currentQuestion.options.map((option) => (
-        <button
-          key={option.value}
-          onClick={() => handleOptionSelection(currentQuestionIndex, option.value)}
-          className="tailwind-button-styles"
-        >
-          {option.label}
-        </button>
-      ));
+     const renderedOptions = currentQuestion.options.map((option) => (
+    <div key={option.value} className="flex items-center space-x-2 mb-2">
+      <input
+        type="checkbox"
+        id={option.value}
+        value={option.value}
+        onChange={(e) => handleOptionSelection(currentQuestionIndex, e.target.value)}
+        className="tailwind-checkbox-styles"
+      />
+      <label htmlFor={option.value} className="text-white">
+        {option.label}
+      </label>
+    </div>
+  ));
+
       
 
   const renderedButton = currentQuestionIndex === questions.length - 1 ? (
@@ -120,7 +120,7 @@ const What2Play = () => {
       Next Question
     </button>
   );
-  console.log('gameResults:', gameResults);
+  // console.log('gameResults:', gameResults);
   const renderedGameResults = gameResults?.results?.map((game) => (
     <div key={game.id} className="tailwind-game-item-styles">
       <h3>{game.name}</h3>
@@ -133,15 +133,31 @@ const What2Play = () => {
     <div className="tailwind-loading-indicator-styles">Loading...</div>
   ) : null;
 
+  const showQuestions = Object.keys(gameResults).length === 0;
+
   return (
-    <div className="tailwind-container-styles">
-      <h2 className="text-orange-200">{currentQuestion.text}</h2>
-      {renderedOptions}
-      {renderedButton}
-      {loadingIndicator}
-      {renderedGameResults}
+    <div className="bg-custom-darkblue min-h-screen flex items-center">
+      <div className="tailwind-container-styles mx-auto p-8">
+        {showQuestions && (
+          <>
+            <h2 className="text-orange-200 text-center">{currentQuestion.text}</h2>
+            <div className="flex flex-wrap justify-center mt-4">{renderedOptions}</div>
+            <div className="text-center mt-6">{renderedButton}</div>
+          </>
+        )}
+        {loadingIndicator}
+        {Object.keys(gameResults).length > 0 && (
+          <>
+            <h1 className="text-orange-200 text-center mb-8">Try These Games Out</h1>
+            <div className="game-grid grid gap-4">
+              {renderedGameResults.slice(0, 10)}
+            </div>
+          </>
+        )}
+      </div>
     </div>
   );
 };
+
 
 export default What2Play;
