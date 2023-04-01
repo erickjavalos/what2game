@@ -1,0 +1,33 @@
+{
+  "name": "tech-friends",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "nodemon server/server.js",
+    "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
+    "install": "cd client && npm i && cd ../server/ && npm i",
+    "seed": "cd server && npm run seed",
+    "build": "cd client && npm run build",
+    "clean": "rm -rf node_modules/ package-lock.json && cd client/ && rm -rf node_modules/ package-lock.json && cd ../server/ && rm -rf node_modules package-lock.json && cd -"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^5.1.0",
+    "tailwindcss": "^3.3.1"
+  },
+  "dependencies": {
+    "apollo-client": "^2.6.10",
+    "apollo-server-express": "^3.12.0",
+    "axios": "^1.3.4",
+    "express": "^4.18.2",
+    "graphql": "^15.8.0",
+    "graphql-yoga": "^3.8.0",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^7.0.3",
+    "nodemon": "^2.0.22",
+    "semver": "^7.3.8"
+  }
+}
