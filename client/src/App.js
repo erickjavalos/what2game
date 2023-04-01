@@ -56,7 +56,6 @@ function App() {
                 path="/"
                 element={<Home />}
               />
-
               <Route 
                 path="/api/games" 
                 element={<What2Play />}
