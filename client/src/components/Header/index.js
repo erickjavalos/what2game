@@ -29,7 +29,7 @@ const Header = () => {
           </Link>
 
           {/* search bar */}
-          <div className=" justify-between items-center w-full lg:flex lg:w-auto lg:order-1"s>
+          <div className=" justify-between items-center w-full lg:flex lg:w-auto lg:order-1">
             <form className="flex items-center">   
                 <label htmlFor="simple-search" className="sr-only">Search</label>
                 <div className="relative w-500">

@@ -5,12 +5,10 @@ const Home = () => {
 
   return (
     <>
-      
+      {/* buttons for quick games  */}
       <QuickLinks />
-      <div style={{width:'100%'}}>
-        <div className="drawLine" style={{width: '100%'}}></div>
-
-      </div>
+      {/* divider */}
+      <div className="drawLine" style={{width: '100%'}}></div>
     </>
   );
 };
