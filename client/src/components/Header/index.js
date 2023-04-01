@@ -15,10 +15,10 @@ const styles = {
 }
 
 const Header = () => {
-  const logout = (event) => {
-    event.preventDefault();
-    Auth.logout();
-  };
+  // const logout = (event) => {
+  //   event.preventDefault();
+  //   Auth.logout();
+  // };
   return (
     <>
     <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5" style={{backgroundColor: 'rgb(130, 2, 99)'}}>
@@ -29,7 +29,7 @@ const Header = () => {
           </Link>
 
           {/* search bar */}
-          <div className=" justify-between items-center w-full lg:flex lg:w-auto lg:order-1"s>
+          <div className="justify-between items-center w-full lg:flex lg:w-auto lg:order-1">
             <form className="flex items-center">   
                 <label htmlFor="simple-search" className="sr-only">Search</label>
                 <div className="relative w-500">
