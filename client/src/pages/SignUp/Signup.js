@@ -11,8 +11,8 @@ import 'font-awesome/css/font-awesome.min.css';
 
 import Auth from '../../utils/auth';
 
-const Login = (props) => {
-  const [formState, setFormState] = useState({ email: '', password: '' });
+const Signup = (props) => {
+  const [formState, setFormState] = useState({ fullName: '', username: '', email: '', password: '' });
   const [login, { error, data }] = useMutation(LOGIN_USER);
 
   // update state based on form input changes
@@ -52,12 +52,12 @@ const Login = (props) => {
       <main className="flex flex-col justify-stretch">
         <div className="card flex flex-row columns-2 h-full">
           <div className="leftColumn flex flex-col h-full w-2/6">
-            <div className="leftSide login loginSection h-full flex flex-col justify-center"><FontAwesomeIcon size='2x' icon={faCircleUser} /><div className="mx-auto pt-2">Log in</div></div>
-            <div className="leftSide login signupSection h-full flex flex-col justify-center"><FontAwesomeIcon size='2x' icon={faPenToSquare} className="pl-2" /><div className="mx-auto pt-2">Sign up</div></div>
+            <div className="leftSide signup loginSection h-full flex flex-col justify-center"><FontAwesomeIcon size='2x' icon={faCircleUser} /><div className="mx-auto pt-2">Log in</div></div>
+            <div className="leftSide signup signupSection h-full flex flex-col justify-center"><FontAwesomeIcon size='2x' icon={faPenToSquare} className="pl-2" /><div className="mx-auto pt-2">Sign up</div></div>
           </div>
 
           <div className="card-body flex flex-col w-full">
-            <div className="title bg-dark text-light p-2 h-1/6 text-center">Log in here</div>
+            <div className="title bg-dark text-light p-2 h-1/6 text-center">Sign up here</div>
 
             {data ? (
               <p>
@@ -69,15 +69,31 @@ const Login = (props) => {
                 <div className="inputFields flex flex-col justify-center h-max pt-5">
                     <input
                       className="form-input w-5/6"
-                      placeholder="&#xf0e0;  Email"
+                      placeholder="Full Name"
+                      name="fullName"
+                      type="fullname"
+                      value={formState.fullName}
+                      onChange={handleChange}
+                    />
+                    <input
+                      className="form-input w-5/6"
+                      placeholder="Username"
+                      name="username"
+                      type="username"
+                      value={formState.username}
+                      onChange={handleChange}
+                    />
+                    <input
+                      className="form-input w-5/6"
+                      placeholder="Email"
                       name="email"
                       type="email"
                       value={formState.email}
                       onChange={handleChange}
                     />
                     <input
-                      className="login form-input w-5/6 mt-30"
-                      placeholder="&#xf084;  Password"
+                      className="form-input w-5/6 mt-5"
+                      placeholder="Password"
                       name="password"
                       type="password"
                       value={formState.password}
@@ -88,7 +104,7 @@ const Login = (props) => {
                   className="submit w-5/6"
                   style={{ cursor: 'pointer' }}
                 >
-                  Log in
+                  Sign up
                 </button>
               </form>
             )}
@@ -105,4 +121,4 @@ const Login = (props) => {
   );
 };
 
-export default Login;
+export default Signup;

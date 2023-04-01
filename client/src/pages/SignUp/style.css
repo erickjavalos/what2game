@@ -52,14 +52,12 @@ main {
     -ms-transform: translateY(-50%);
     -webkit-transform: translateY(-50%);
     transform: translateY(-50%);
-} 
+}
 
-.login.loginSection{
+.signup.signupSection {
     background-color: #ffd400;
     color: #2E294E
 }
-
-
 .submit {
     background-color: #ffd400;
     color: #2E294E;
@@ -89,9 +87,4 @@ main {
 }
 .title {
     font-size: 38px;
-}
-
-.submitForm .login.form-input{
-    height: 40px;
-    margin: 16px auto;
 }
