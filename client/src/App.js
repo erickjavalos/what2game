@@ -15,6 +15,7 @@ import SingleThought from './pages/SingleThought';
 import Profile from './pages/Profile';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import What2Play from './pages/What2Play/What2Play';
 import GameDetails from './components/GameDetails';
 import GameReviews from './components/GameReviews';
 import Genres from './components/Genres';
@@ -56,14 +57,19 @@ function App() {
           <Header />
            <div className="container">
             <Routes>
-              {/* <Route 
+              <Route 
                 path="/"
                 element={<Home />}
-              /> */}
+              />
               <Route 
                 path="/login" 
                 element={<Login />}
               />
+
+              <Route 
+                path="/api/games" 
+                element={<What2Play />}
+              />  
               {/* <Route 
                 path="/signup" 
                 element={<Signup />}
@@ -102,7 +108,6 @@ function App() {
               /> */}
             </Routes>
           </div>
-          <Footer />
         </div>
 
       </Router>
