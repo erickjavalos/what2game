@@ -22,7 +22,7 @@ const Header = () => {
   return (
     <>
     <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5" style={{backgroundColor: 'rgb(130, 2, 99)'}}>
-        <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
+        <div className="flex flex-wrap justify-between items-center mx-auto">
           {/* logo */}
           <Link className="text-light items-center" to="/">
             <img src={logo} style={styles.logo}></img>
@@ -59,7 +59,6 @@ const Header = () => {
               </button>
             </Link>
           </div>
-          
       </div>
     </nav>
     </>

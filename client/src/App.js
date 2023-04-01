@@ -23,6 +23,7 @@ import SearchGame from './components/SearchGame';
 import Streams from './components/Streams';
 
 import './dist/output.css'
+import './index.css'
 
 
 // Construct our main GraphQL API endpoint
@@ -55,7 +56,7 @@ function App() {
       <Router>
         <div className="flex flex-col">
           <Header />
-           <div className="container">
+           <div className="">
             <Routes>
               <Route 
                 path="/"
