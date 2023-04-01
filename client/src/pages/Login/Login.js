@@ -4,6 +4,8 @@ import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../../utils/mutations';
 import './style.css'
 import companyLogo from '../../components/images/logo.png';
+import Header from '../../components/Header';
+
 
 import Auth from '../../utils/auth';
 
@@ -44,9 +46,10 @@ const Login = (props) => {
 
   return (
     <div className="background flex flex-col justify-center">
-      <div className="companyLogo flex flex-row justify-center">
+      <Header />
+      {/* <div className="companyLogo flex flex-row justify-center">
         <img src={companyLogo} alt="logo" />
-      </div>
+      </div> */}
       <main className="flex flex-col justify-stretch">
         <div className="card flex flex-row columns-2 h-full">
           <div className="leftColumn flex flex-col h-full w-2/6">
