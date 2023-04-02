@@ -3,8 +3,8 @@
   }
   
   .tailwind-button-styles {
-    display: flex; /* Add this property to display the label and checkbox inline */
-    align-items: center; /* Add this property to align the checkbox vertically */
+    display: flex; 
+    align-items: center; 
     background-color: #ffffff;
     border: none;
     color: #000000;

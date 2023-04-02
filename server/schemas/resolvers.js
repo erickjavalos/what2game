@@ -3,7 +3,6 @@ const { AuthenticationError } = require('apollo-server-express');
 const { User, Thought } = require('../models');
 const { signToken } = require('../utils/auth');
 require('dotenv').config()
-import { API_KEY } from "../../client/src/components/config/config";
 
 let clientId = process.env.CLIENT_ID;
 let clientSecret =  process.env.TWITCH_SECRET;
@@ -23,34 +22,34 @@ function getTwitchAuthorization() {
 }
 
 const fetchGame = async (id) => {
-  const response = await fetch(`https://api.rawg.io/api/games/${id}?key=${API_KEY}`);
+  const response = await fetch(`https://api.rawg.io/api/games/${id}?key=df0a6dbf13504aefb411f7298892a149`);
   const json = await response.json();
   return json;
 };
 const fetchGamesBySearch = async (query) => {
-  const response = await fetch(`https://api.rawg.io/api/games?key=${API_KEY}&search=${query}`);
+  const response = await fetch(`https://api.rawg.io/api/games?key=df0a6dbf13504aefb411f7298892a149&search=${query}`);
   const json = await response.json();
   return json.results;
 };
 const fetchGenres = async () => {
-  const response = await fetch(`https://api.rawg.io/api/genres?key=${API_KEY}&ordering=-games_count&page_size=10`);
+  const response = await fetch('https://api.rawg.io/api/genres?key=df0a6dbf13504aefb411f7298892a149&ordering=-games_count&page_size=10');
   const json = await response.json();
   return json.results;
 };
 const resolvers = {
   Query: {
     async genres() {
-      const response = await fetch(`https://api.rawg.io/api/genres?key=${API_KEY}&ordering=-games_count&page_size=10`);
+      const response = await fetch('https://api.rawg.io/api/genres?key=df0a6dbf13504aefb411f7298892a149&ordering=-games_count&page_size=10');
       const json = await response.json();
       return json.results;
     },
     async game(parent, { id }, context, info) {
-      const response = await fetch(`https://api.rawg.io/api/games/${id}?key=${API_KEY}`);
+      const response = await fetch(`https://api.rawg.io/api/games/${id}?key=df0a6dbf13504aefb411f7298892a149`);
       const json = await response.json();
       return json;
     },
     async search(parent, { query }, context, info) {
-      const response = await fetch(`https://api.rawg.io/api/games?key=${API_KEY}&search=${query}`);
+      const response = await fetch(`https://api.rawg.io/api/games?key=df0a6dbf13504aefb411f7298892a149&search=${query}`);
       const json = await response.json();
       return json.results;
     },
