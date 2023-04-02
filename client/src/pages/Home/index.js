@@ -1,21 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './styles.css'
-import QuickLinks from '../../components/Quicklinks'
-const Home = () => {
-  // TODO: add states to keep track on button click state on Quicklink
 
+import QuickLinks from '../../components/Quicklinks'
+import Trending from '../../components/Trending'
+import Genre from '../../components/Genre'
+
+const Home = () => {
+  // set state to handle page changes 
+  const [currentPage, setCurrentPage] = useState('trending');
+
+  // checks which page we are currently on to render content
+  const renderPage = () => {
+
+    if (currentPage === 'trending'){
+      return <Trending/>
+    }
+    else {
+      // passing props to genre component to render relative info
+      return <Genre currentPage={currentPage}/>
+    }
+    
+  };
+
+  // handles page change state
+  const handlePageChange = (page) => setCurrentPage(page);
 
   return (
     <>
       {/* buttons for quick games  */}
-      <QuickLinks />
+      <QuickLinks handlePageChange={handlePageChange}/>
       {/* divider */}
       <div className="drawLine" style={{width: '100%'}}></div>
-      {/* TODO: add ternary operator to render either trending component or genre component 
-        ex.
-        {buttonState === 'trending'? {<Trending />} : {<Genre />}}
-      */}
-
+      {/* render content based on selected quicklink */}
+      {renderPage()}
     </>
   );
 };

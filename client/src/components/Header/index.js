@@ -1,15 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-// import '../../dist/output.css'
-// import '../../index.css'
-// import './styles.css'
 import logo from '../images/logo.png'
-
 import Auth from '../../utils/auth';
 
 const styles = {
   logo: {
-    // backgroundColor: 'rgb(130,2,99)',
     width: '150px'
   }
 }
