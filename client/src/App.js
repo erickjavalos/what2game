@@ -13,7 +13,7 @@ import Signup from './pages/Signup';
 import Profile from './pages/Profile';
 import Login from './pages/Login/Login';
 import Header from './components/Header';
-import What2Play from './pages/What2Play/What2Play';
+import What2Play from './components/What2Play/What2Play';
 import GameDetails from './components/GameDetails';
 import GameReviews from './components/GameReviews';
 import Genres from './components/Genres';

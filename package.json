@@ -1,5 +1,5 @@
 {
-  "name": "tech-friends",
+  "name": "what2game",
   "version": "1.0.0",
   "description": "",
   "main": "server/server.js",
@@ -11,6 +11,7 @@
     "build": "cd client && npm run build",
     "clean": "rm -rf node_modules/ package-lock.json && cd client/ && rm -rf node_modules/ package-lock.json && cd ../server/ && rm -rf node_modules package-lock.json && cd -"
   },
+  
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -30,5 +31,7 @@
     "mongoose": "^7.0.3",
     "nodemon": "^2.0.22",
     "semver": "^7.3.8"
-  }
+  },
+  "proxy": "http://localhost:3001"
+  
 }

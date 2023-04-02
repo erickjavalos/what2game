@@ -64,31 +64,43 @@ function GameDetails() {
           Search
         </button>
       </form>
-      {isLoading && <div>Loading game details...</div>}
+      {isLoading && <div className="font-bold" style={{ fontSize: "32px", color: "#FFD400"}}>Loading game details...</div>}
       {error && <div>{error}</div>}
       {game && (
-        <div className="flex flex-col items-center">
-          <h1 className="text-4xl font-bold mb-4">{game.name}</h1>
-          <img src={game.background_image} alt={game.name} className="mb-4" />
-          <div className="flex justify-center">
-            <div className="w-1/2 p-2">
-              <h2 className="text-2xl font-bold">Details</h2>
-              <p>Release Date: {game.released}</p>
-              <p>Rating: {game.rating}</p>
-              <p>
-                Platforms:{" "}
-                {game.platforms
-                  .map((platform) => platform.platform.name)
-                  .join(", ")}
-              </p>
-              <p>Genre: {game.genres.map((genre) => genre.name).join(", ")}</p>
-            </div>
-            <div className="w-1/2 p-2">
-              <h2 className="text-2xl font-bold">Description</h2>
-              <div className="text-justify" dangerouslySetInnerHTML={createMarkup()} />
-            </div>
-          </div>
-        </div>
+    <div className="flex flex-col md:flex-row" style={{ fontSize: "20px" }}>
+    <img
+      src={game.background_image}
+      alt={game.name}
+      className="w-full md:w-1/2 h-auto"
+      style={{ maxHeight: "675px" }}
+    />
+    <div className="flex-1 p-3 bg-yellow-100">
+      <h2 className="font-bold text-4xl mb-4">Details</h2>
+      <p className="mb-2">
+        <span className="font-bold">Release Date:</span> {game.released}
+      </p>
+      <p className="mb-2">
+        <span className="font-bold">Rating:</span> {game.rating}
+      </p>
+      <p className="mb-2">
+        <span className="font-bold">Platforms:</span>{" "}
+        {game.platforms.map((platform) => platform.platform.name).join(", ")}
+      </p>
+      <p className="mb-2">
+        <span className="font-bold">Genres:</span>{" "}
+        {game.genres.map((genre) => genre.name).join(", ")}
+      </p>
+      <h2 className="text-2xl font-bold mt-4 mb-4" style={{ fontSize: "40px" }}>
+        Description
+      </h2>
+      <div
+        className="text-justify"
+        style={{ fontSize: "17px" }}
+        dangerouslySetInnerHTML={createMarkup()}
+      />
+    </div>
+  </div>
+  
       )}
     </div>
   );

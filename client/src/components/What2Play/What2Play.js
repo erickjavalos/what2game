@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 
-
 // const APIKEY = process.env.REACT_APP_RAWG_API_KEY;
 
 const What2Play = () => {
@@ -87,76 +86,75 @@ const What2Play = () => {
   
       const currentQuestion = questions[currentQuestionIndex];
      const renderedOptions = currentQuestion.options.map((option) => (
-    <div key={option.value} className="flex items-center bg-white border-none text-black py-2 px-4 mr-2 mb-4 cursor-pointer">
+      <div key={option.value} className="flex items-center bg-white border-none text-black py-2 px-4 mr-2 mb-4 cursor-pointer">
       <input
         type="checkbox"
         id={option.value}
         value={option.value}
         onChange={(e) => handleOptionSelection(currentQuestionIndex, e.target.value)}
-        className="tailwind-checkbox-styles"
+        className="form-checkbox h-4 w-4 text-gray-600 transition duration-150 ease-in-out tailwind-checkbox-styles"
       />
-      <label htmlFor={option.value} className="text-white">
+      <label htmlFor={option.value} className="ml-2 text-sm leading-5 text-gray-700">
         {option.label}
       </label>
     </div>
-  ));
-
-      
-
-  const renderedButton = currentQuestionIndex === questions.length - 1 ? (
-    <button
-      onClick={handleFindGame}
-      className="flex items-center bg-white border-none text-black py-2 px-4 mr-2 mb-4 cursor-pointer"
-      disabled={!nextButtonEnabled}
-    >
-      Find Game
-    </button>
-  ) : (
-    <button
-      onClick={handleNextButtonClick}
-      className="flex items-center bg-white border-none text-black py-2 px-4 mr-2 mb-4 cursor-pointer"
-      disabled={!nextButtonEnabled}
-    >
-      Next Question
-    </button>
-  );
-  // console.log('gameResults:', gameResults);
-  const renderedGameResults = gameResults?.results?.map((game) => (
-    <div key={game.id} className="tailwind-game-item-styles">
-      <h3>{game.name}</h3>
-      <img src={game.background_image} alt={game.name} />
-    </div>
-  )) || [];
-  
-
-  const loadingIndicator = loading ? (
-    <div className="tailwind-loading-indicator-styles">Loading...</div>
-  ) : null;
-
-  const showQuestions = Object.keys(gameResults).length === 0;
-
-  return (
-    <div className="bg-custom-darkblue min-h-screen flex items-center">
-      <div className="tailwind-container-styles mx-auto p-8">
-        {showQuestions && (
-          <>
-            <h2 className="text-orange-200 text-center">{currentQuestion.text}</h2>
-            <div className="flex flex-wrap justify-center mt-4">{renderedOptions}</div>
-            <div className="text-center mt-6">{renderedButton}</div>
-          </>
-        )}
-        {loadingIndicator}
-        {Object.keys(gameResults).length > 0 && (
-          <>
-            <h1 className="text-orange-200 text-center mb-8">Try These Games Out</h1>
-            <div className="game-grid grid gap-4">
-              {renderedGameResults.slice(0, 10)}
-            </div>
-          </>
-        )}
+    ));
+    
+    const renderedButton = currentQuestionIndex === questions.length - 1 ? (
+      <button
+        onClick={handleFindGame}
+        className="inline-flex items-center px-4 py-2 bg-white border border-transparent rounded-md font-semibold text-xs text-black uppercase tracking-widest focus:outline-none focus:shadow-outline-gray transition ease-in-out duration-150 cursor-pointer mr-2 mb-4 disabled:opacity-50 disabled:cursor-not-allowed"
+        disabled={!nextButtonEnabled}
+      >
+        Find Game
+      </button>
+    ) : (
+      <button
+        onClick={handleNextButtonClick}
+        className="inline-flex items-center px-4 py-2 bg-white border border-transparent rounded-md font-semibold text-xs text-black uppercase tracking-widest focus:outline-none focus:shadow-outline-gray transition ease-in-out duration-150 cursor-pointer mr-2 mb-4 disabled:opacity-50 disabled:cursor-not-allowed"
+        disabled={!nextButtonEnabled}
+      >
+        Next Question
+      </button>
+    );
+    
+    const renderedGameResults = gameResults?.results?.map((game) => (
+      <div key={game.id} className="bg-white rounded-md shadow-md overflow-hidden tailwind-game-item-styles">
+        <img src={game.background_image} alt={game.name} className="w-full h-48 object-cover" />
+        <div className="p-4">
+          <h3 className="text-lg font-medium text-gray-900">{game.name}</h3>
+        </div>
       </div>
-    </div>
-  );
+    )) || [];
+    
+    const loadingIndicator = loading ? (
+      <div className="bg-white rounded-md shadow-md p-4 text-center tailwind-loading-indicator-styles">Loading...</div>
+    ) : null;
+    
+    const showQuestions = Object.keys(gameResults).length === 0;
+    
+    return (
+      <div className="bg-custom-darkblue min-h-screen flex items-center">
+        <div className="max-w-2xl mx-auto p-8">
+          {showQuestions && (
+            <>
+              <h2 className="text-2xl font-semibold text-orange-200 text-center mb-4">{currentQuestion.text}</h2>
+              <div className="flex flex-wrap justify-center mt-4">{renderedOptions}</div>
+              <div className="text-center mt-6">{renderedButton}</div>
+            </>
+          )}
+          {loadingIndicator}
+          {Object.keys(gameResults).length > 0 && (
+            <>
+              <h1 className="text-3xl font-semibold text-orange-200 text-center mb-8">Try These Games Out</h1>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {renderedGameResults.slice(0, 10)}
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+    );
 };
 
 
