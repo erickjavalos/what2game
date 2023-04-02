@@ -9,7 +9,7 @@ function App() {
     event.preventDefault();
     // perform validation and other checks
     // set gameSlug to the selected game's slug
-    setGameSlug(`${gameSlug}`);
+    setGameSlug("selected-game-slug");
   };
 
   return (
