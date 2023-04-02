@@ -10,21 +10,15 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import Home from './pages/Home';
 import Signup from './pages/Signup';
-import Profile from './pages/Profile';
 import Login from './pages/Login/Login';
 import Header from './components/Header';
 import What2Play from './pages/What2Play/What2Play';
-import GameDetails from './components/GameDetails';
-import GameReviews from './components/GameReviews';
-import Genres from './components/Genres';
-import SearchGame from './components/SearchGame';
-import Streams from './components/Streams'
 
 import './dist/output.css'
 import './index.css'
 
 
-// Construct our main GraphQL API endpoint 
+// Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
   uri: '/graphql',
 });
@@ -70,16 +64,24 @@ function App() {
               />
 
               <Route 
-                path="/what2play" 
+                path="/api/games" 
                 element={<What2Play />}
               />  
-              <Route 
+              {/* <Route 
                 path="/signup" 
                 element={<Signup />}
               />
               <Route 
+                path="/me" 
+                element={<Profile />}
+              />
+              <Route 
                 path="/profiles/:username" 
                 element={<Profile />}
+              />
+              <Route 
+                path="/thoughts/:thoughtId" 
+                element={<SingleThought />}
               />
               <Route 
                 path="/game/:gameId" 
@@ -100,7 +102,7 @@ function App() {
               <Route 
                 path="/streams" 
                 element={<Streams />}
-              />
+              /> */}
             </Routes>
           </div>
         </div>

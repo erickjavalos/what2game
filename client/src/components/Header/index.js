@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../../dist/output.css'
-import '../../index.css'
-import './styles.css'
+// import '../../dist/output.css'
+// import '../../index.css'
+// import './styles.css'
 import logo from '../images/logo.png'
 
 import Auth from '../../utils/auth';

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import './What2Play.css';
 
 // const APIKEY = process.env.REACT_APP_RAWG_API_KEY;
 
@@ -87,7 +87,7 @@ const What2Play = () => {
   
       const currentQuestion = questions[currentQuestionIndex];
      const renderedOptions = currentQuestion.options.map((option) => (
-    <div key={option.value} className="flex items-center bg-white border-none text-black py-2 px-4 mr-2 mb-4 cursor-pointer">
+    <div key={option.value} className="flex items-center space-x-2 mb-2">
       <input
         type="checkbox"
         id={option.value}
@@ -106,7 +106,7 @@ const What2Play = () => {
   const renderedButton = currentQuestionIndex === questions.length - 1 ? (
     <button
       onClick={handleFindGame}
-      className="flex items-center bg-white border-none text-black py-2 px-4 mr-2 mb-4 cursor-pointer"
+      className="tailwind-button-styles"
       disabled={!nextButtonEnabled}
     >
       Find Game
@@ -114,7 +114,7 @@ const What2Play = () => {
   ) : (
     <button
       onClick={handleNextButtonClick}
-      className="flex items-center bg-white border-none text-black py-2 px-4 mr-2 mb-4 cursor-pointer"
+      className="tailwind-button-styles"
       disabled={!nextButtonEnabled}
     >
       Next Question
