@@ -21,6 +21,101 @@ function getTwitchAuthorization() {
   });
 }
 
+async function getHeaders()
+{
+    let authorizationObject = await getTwitchAuthorization();
+
+    let { access_token, expires_in, token_type } = authorizationObject;
+
+    //token_type first letter must be uppercase    
+    token_type =
+    token_type.substring(0, 1).toUpperCase() +
+    token_type.substring(1, token_type.length);
+
+    let authorization = `${token_type} ${access_token}`;
+
+    let headers = {
+      authorization,
+      "Client-Id": clientId,
+    };
+    return headers
+    
+}
+
+async function getTopGamesUnmerged(headers) {
+
+  const endpoint = "https://api.twitch.tv/helix/games/top?first=20"
+
+  const response = await fetch(endpoint, {
+    headers,
+  })
+  // get json response 
+  const json = await response.json()
+
+  // filter out top ten games that have valid igdb ids
+  let cnt = 0;
+  let dataRtn = []
+  for (let i =0; i < json.data.length; i++)
+  {
+    if (cnt >= 10)
+    {
+      i = json.data.length + 1
+    }
+    else if (json.data[i].igdb_id !== "")
+    {
+      // console.log(json.data[i])
+      dataRtn.push(json.data[i])
+      cnt += 1;
+    }
+  }
+  // return the data to graphql
+  return dataRtn
+}
+
+async function format(topTen, headers)
+{
+     // get top ten games data
+     let formatedData = []
+     // iterate through each top game and get genres, rating, platforms
+     await Promise.all(topTen.map(async (ele) => {
+         const gameEndpoint = `https://api.igdb.com/v4/games/${ele.igdb_id}?fields=genres,rating`
+         const response = await fetch(gameEndpoint, {
+             headers,
+         })
+         // // get game json response 
+         const game = await response.json()
+         const genreValid = game[0]?.genres || -1;
+         // evaluate genre if it exists
+         let genre = ''
+         if (genreValid !== -1){
+             //  get 1st genre name from endpoint 
+             const genreEndpoint = `https://api.igdb.com/v4/genres/${game[0].genres[0]}?fields=name`
+             const genreResp = await fetch(genreEndpoint, {
+                 headers,
+             })
+             // // get json response 
+             const genreName = await genreResp.json()
+             // assign genre
+             genre = genreName[0]?.name || "null"
+ 
+         }
+         // if genre array is empty, return null
+         else {
+             genre = 'null'
+ 
+         }
+         formatedData.push({
+             name: ele.name,
+             box_art_url: ele.box_art_url,
+             genre: genre,
+             rating: game[0]?.rating || "null"
+         })
+ 
+     }));
+ 
+     return formatedData
+}
+
 const fetchGame = async (id) => {
   const response = await fetch(`https://api.rawg.io/api/games/${id}?key=df0a6dbf13504aefb411f7298892a149`);
   const json = await response.json();
@@ -53,51 +148,18 @@ const resolvers = {
       const json = await response.json();
       return json.results;
     },
-    
     async topTen() {
-      const endpoint = "https://api.twitch.tv/helix/games/top?first=20";
-      let authorizationObject = await getTwitchAuthorization();
+      // get auth token
+      let headers = await getHeaders()
+      // retreive top ten games
+      let topTenUM = await getTopGamesUnmerged(headers)
+      // get logo information
+      let topTen = await format(topTenUM, headers)
 
-      let { access_token, expires_in, token_type } = authorizationObject;
-
-      //token_type first letter must be uppercase    
-      token_type =
-      token_type.substring(0, 1).toUpperCase() +
-      token_type.substring(1, token_type.length);
-
-      let authorization = `${token_type} ${access_token}`;
-
-      let headers = {
-        authorization,
-        "Client-Id": clientId,
-      };
-
-      const response = await fetch(endpoint, {
-        headers,
-      })
-      // get json response 
-      const json = await response.json()
-
-      // filter out top ten games that have valid igdb ids
-      let cnt = 0;
-      let dataRtn = []
-      for (let i =0; i < json.data.length; i++)
-      {
-        if (cnt >= 10)
-        {
-          i = json.data.length + 1
-        }
-        else if (json.data[i].igdb_id !== "")
-        {
-          // console.log(json.data[i])
-          dataRtn.push(json.data[i])
-          cnt += 1;
-        }
-      }
-      // return the data to graphql
-      return dataRtn
-      
-    },
+      console.log(topTen)
+      return topTen
+    }
+    
     // users: async () => {
     //   return User.find().populate('thoughts');
     // },

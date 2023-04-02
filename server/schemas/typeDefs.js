@@ -100,10 +100,11 @@ const typeDefs = gql`
     user: User
   }
   type TwitchGame {
-    id: String!
-    name: String!
-    box_art_url: String!
-    igdb_id: String!
+    id: String
+    name: String
+    box_art_url: String
+    genre: String
+    rating: String
   }
 
 
