@@ -1,5 +1,4 @@
 import { gql } from '@apollo/client';
-
 import {API_KEY} from '../components/config/config'
 
 //single game call
@@ -19,6 +18,8 @@ export async function fetchGames() {
   const { results } = await response.json();
   return results;
 }
+
+
 // get all genres
 export const GET_GENRES = gql`
   query GetGenres {
@@ -32,11 +33,13 @@ export const GET_GENRES = gql`
 // Get genres
 export async function fetchGenres() {
   const response = await fetch(
-    `https://api.rawg.io/api/genres?key=${API_KEY}&ordering=-games_count&page_size=5`
+    `https://api.rawg.io/api/genres?key=${API_KEY}&ordering=-games_count&ordering=-rating&page_size=10`
   );
   const { results } = await response.json();
   return results;
 }
+
+
 //get platforms
 export const GET_PLATFORMS = gql`
   query GetPlatforms {
@@ -57,8 +60,8 @@ export async function fetchPlatforms() {
 
 // Get game reviews
 export const GET_GAME_REVIEWS = gql`
-  query GetGameReviews($id: ID!) {
-    game(id: $id) {
+  query GetGameReviews($gameSlug: String!) {
+    game(slug: $gameSlug) {
       name
       reviews {
         id
@@ -68,6 +71,12 @@ export const GET_GAME_REVIEWS = gql`
     }
   }
 `;
+
+export async function fetchRreviews(gameSlug, API_KEY) {
+  const response = await fetch(`https://api.rawg.io/api/games/${gameSlug}/reviews?key=${API_KEY}`);
+  const { results } = await response.json();
+  return results;
+}
 
 // thoughts for now 
 
@@ -129,9 +138,3 @@ export const QUERY_ME = gql`
     }
   }
 `;
-export async function fetchRreviews() {
-  const response = await fetch(`https://api.rawg.io/api/games/reviews?key=${API_KEY}`);
-  const { results } = await response.json();
-  return results;
-}
-
