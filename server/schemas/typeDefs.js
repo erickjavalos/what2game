@@ -105,6 +105,7 @@ const typeDefs = gql`
     box_art_url: String
     genre: String
     rating: String
+    igdb_id: String
   }
 
 

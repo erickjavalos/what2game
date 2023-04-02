@@ -11,6 +11,7 @@ export const GET_TOP_TEN = gql`
       box_art_url
       name
       rating
+      igdb_id
     }
   }
 `

@@ -113,7 +113,8 @@ async function format(topTen, headers)
             name: ele.name,
             box_art_url: art,
             genre: genre,
-            rating: game[0]?.rating || "null"
+            rating: game[0]?.rating || "null",
+            igdb_id: ele.igdb_id
         })
         count += 1;
 
