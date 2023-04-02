@@ -74,46 +74,52 @@ async function getTopGamesUnmerged(headers) {
 
 async function format(topTen, headers)
 {
-     // get top ten games data
-     let formatedData = []
-     // iterate through each top game and get genres, rating, platforms
-     await Promise.all(topTen.map(async (ele) => {
-         const gameEndpoint = `https://api.igdb.com/v4/games/${ele.igdb_id}?fields=genres,rating`
-         const response = await fetch(gameEndpoint, {
-             headers,
-         })
-         // // get game json response 
-         const game = await response.json()
-         const genreValid = game[0]?.genres || -1;
-         // evaluate genre if it exists
-         let genre = ''
-         if (genreValid !== -1){
-             //  get 1st genre name from endpoint 
-             const genreEndpoint = `https://api.igdb.com/v4/genres/${game[0].genres[0]}?fields=name`
-             const genreResp = await fetch(genreEndpoint, {
-                 headers,
-             })
-             // // get json response 
-             const genreName = await genreResp.json()
-             // assign genre
-             genre = genreName[0]?.name || "null"
- 
-         }
-         // if genre array is empty, return null
-         else {
-             genre = 'null'
- 
-         }
-         formatedData.push({
-             name: ele.name,
-             box_art_url: ele.box_art_url,
-             genre: genre,
-             rating: game[0]?.rating || "null"
-         })
- 
-     }));
- 
-     return formatedData
+      // get top ten games data
+    let formatedData = []
+    count = 0;
+    // iterate through each top game and get genres, rating, platforms
+    await Promise.all(topTen.map(async (ele) => {
+        const gameEndpoint = `https://api.igdb.com/v4/games/${ele.igdb_id}?fields=genres,rating`
+        const response = await fetch(gameEndpoint, {
+            headers,
+        })
+        // // get game json response 
+        const game = await response.json()
+        const genreValid = game[0]?.genres || -1;
+        // evaluate genre if it exists
+        let genre = ''
+        if (genreValid !== -1){
+            //  get 1st genre name from endpoint 
+            const genreEndpoint = `https://api.igdb.com/v4/genres/${game[0].genres[0]}?fields=name`
+            const genreResp = await fetch(genreEndpoint, {
+                headers,
+            })
+            // // get json response 
+            const genreName = await genreResp.json()
+            // assign genre
+            genre = genreName[0]?.name || "null"
+
+        }
+        // if genre array is empty, return null
+        else {
+            genre = 'null'
+
+        }
+        // fix box url 
+        const urlSplit = ele.box_art_url.split("{width}x{height}")
+        const art = urlSplit[0] + '300x300' + urlSplit[1]
+        formatedData.push({
+            id: count,
+            name: ele.name,
+            box_art_url: art,
+            genre: genre,
+            rating: game[0]?.rating || "null"
+        })
+        count += 1;
+
+    }));
+
+    return formatedData
 }
 
 const fetchGame = async (id) => {
@@ -156,7 +162,6 @@ const resolvers = {
       // get logo information
       let topTen = await format(topTenUM, headers)
 
-      console.log(topTen)
       return topTen
     }
     

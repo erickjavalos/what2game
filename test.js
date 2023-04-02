@@ -96,9 +96,12 @@ async function format(topTen, headers)
             genre = 'null'
 
         }
+        // fix box url 
+        const urlSplit = ele.box_art_url.split("{width}x{height}")
+        const art = urlSplit[0] + '200x200' + urlSplit[1]
         formatedData.push({
             name: ele.name,
-            box_art_url: ele.box_art_url,
+            box_art_url: art,
             genre: genre,
             rating: game[0]?.rating || "null"
         })

@@ -6,10 +6,11 @@ import {API_KEY} from '../components/config/config'
 export const GET_TOP_TEN = gql`
   query TopTen {
     topTen {
-      name
-      igdb_id
-      box_art_url
       id
+      genre
+      box_art_url
+      name
+      rating
     }
   }
 `
