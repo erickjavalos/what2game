@@ -22,14 +22,14 @@ const Header = () => {
   return (
     <>
     <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5" style={{backgroundColor: 'rgb(130, 2, 99)'}}>
-        <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
+        <div className="flex flex-wrap justify-between items-center mx-auto">
           {/* logo */}
           <Link className="text-light items-center" to="/">
             <img src={logo} style={styles.logo}></img>
           </Link>
 
           {/* search bar */}
-          <div className=" justify-between items-center w-full lg:flex lg:w-auto lg:order-1"s>
+          <div className=" justify-between items-center w-full lg:flex lg:w-auto lg:order-1">
             <form className="flex items-center">   
                 <label htmlFor="simple-search" className="sr-only">Search</label>
                 <div className="relative w-500">
@@ -59,7 +59,6 @@ const Header = () => {
               </button>
             </Link>
           </div>
-          
       </div>
     </nav>
     </>

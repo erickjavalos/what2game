@@ -10,7 +10,6 @@ let clientSecret =  process.env.TWITCH_SECRET;
 // twitch authorization request
 function getTwitchAuthorization() {
   // grab secrets
-
   let url = `https://id.twitch.tv/oauth2/token?client_id=${clientId}&client_secret=${clientSecret}&grant_type=client_credentials`;
 
   return fetch(url, {
@@ -56,9 +55,9 @@ const resolvers = {
     },
     
     async topTen() {
-
       const endpoint = "https://api.twitch.tv/helix/games/top?first=20";
       let authorizationObject = await getTwitchAuthorization();
+
       let { access_token, expires_in, token_type } = authorizationObject;
 
       //token_type first letter must be uppercase    
