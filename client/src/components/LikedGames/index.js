@@ -2,10 +2,21 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const LikedGames = ({ games = [] }) => {
-    // console.log('art')
-    // console.log(games)
   if (!games.length) {
-    return <h3>No Liked Games</h3>;
+    return(
+    <div>
+        <div className="flex-row justify-center mb-3 text-center">
+            <h2 className="text-4xl text-white col-12 col-md-10 bg-dark text-light p-3 mb-5 m-2">
+            My Profile
+            </h2>
+            <div className="mt-6 mb-6 text-center">
+                <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Liked Games 🫶</h5>
+                <h5 className="text-1xl tracking-tight text-gray-900 dark:text-white m-10">No Liked Games...</h5>
+            </div>
+        </div>
+    </div>
+        
+    )
   }
 
   return (
