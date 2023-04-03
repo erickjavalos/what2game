@@ -7,6 +7,7 @@ import TopTenGames from '../TopTenGames'
 
 const Trending = () => {
   const { loading, data } = useQuery(GET_TOP_TEN);
+  console.log('trending')
   const topTen = data?.topTen || [];
 
   return (

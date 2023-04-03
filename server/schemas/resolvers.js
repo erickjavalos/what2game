@@ -72,6 +72,79 @@ async function getTopGamesUnmerged(headers) {
   return dataRtn
 }
 
+
+async function getLikedGames(liked, headers)
+{
+    // get top ten games data
+    let formatedData = []
+    count = 0;
+    await Promise.all(liked.map(async (like) => {
+        const gameEndpoint = `https://api.igdb.com/v4/games/${like}?fields=name,cover,genres,rating`
+        const response = await fetch(gameEndpoint, {
+            headers,
+        })
+        // get game json response 
+        const game = await response.json()
+        const genreValid = game[0]?.genres || -1;
+        // evaluate genre if it exists
+        let genre = ''
+        if (genreValid !== -1){
+            //  get 1st genre name from endpoint 
+            const genreEndpoint = `https://api.igdb.com/v4/genres/${game[0].genres[0]}?fields=name`
+            const genreResp = await fetch(genreEndpoint, {
+                headers,
+            })
+            // // get json response 
+            const genreName = await genreResp.json()
+            console.log('genrename')
+            console.log(genreName)
+            // assign genre
+            genre = genreName[0]?.name || "null"
+
+        }
+        // if genre array is empty, return null
+        else {
+            genre = 'null'
+
+        }
+
+        // get cover art 
+        const coverValid = game[0]?.cover || -1;
+        // evaluate genre if it exists
+        let coverUrl = ''
+        if (coverValid !== -1){
+            //  get 1st genre name from endpoint 
+            const coverEndpoint = `https://api.igdb.com/v4/covers/${game[0].cover}?fields=url`
+            const coverResp = await fetch(coverEndpoint, {
+                headers,
+            })
+            // // get json response 
+            const coverData = await coverResp.json()
+            // assign genre
+            coverUrl = coverData[0].url.split("//")[1]
+
+        }
+        // if genre array is empty, return null
+        else {
+            coverUrl = 'null'
+
+        }
+
+        // console.log(game[0].name)
+        // get cover art url
+        formatedData.push({
+            id: count,
+            name: game[0].name,
+            box_art_url: coverUrl,
+            genre: genre,
+            rating: game[0]?.rating || "null",
+            igdb_id: like
+        })
+        count +=1;
+    }))
+    return formatedData
+}
+
 async function format(topTen, headers)
 {
       // get top ten games data
@@ -155,27 +228,6 @@ const resolvers = {
       const json = await response.json();
       return json.results;
     },
-
-    // added for What2Play component
-    async recommendedGames(parent, { genres, platforms, esrb_rating }, context, info) {
-      const params = new URLSearchParams({
-        key: 'df0a6dbf13504aefb411f7298892a149',
-        ...(genres ? { genres } : {}),
-        ...(platforms ? { platforms } : {}),
-        ...(esrb_rating ? { esrb_rating } : {}),
-      });
-      const response = await fetch(`https://api.rawg.io/api/games?${params.toString()}`);
-      const json = await response.json();
-      const games = json.results;
-      const gameDetailsPromises = games.map(async (game) => {
-        const gameDetailsResponse = await fetch(`https://api.rawg.io/api/games/${game.id}?key=df0a6dbf13504aefb411f7298892a149`);
-        const gameDetailsJson = await gameDetailsResponse.json();
-        return gameDetailsJson;
-      });
-      const gamesWithDetails = await Promise.all(gameDetailsPromises);
-      return gamesWithDetails;
-    },
-    
     async topTen() {
       // get auth token
       let headers = await getHeaders()
@@ -188,21 +240,28 @@ const resolvers = {
     },
   
     users: async () => {
-      return User.find();
+      return User.find().populate('likes');
     },
     user: async (parent, { username }) => {
-      return User.findOne({ username });
+      return User.findOne({ username }).populate('likes');
     },
-    // thoughts: async (parent, { username }) => {
-    //   const params = username ? { username } : {};
-    //   return Thought.find(params).sort({ createdAt: -1 });
-    // },
-    // thought: async (parent, { thoughtId }) => {
-    //   return Thought.findOne({ _id: thoughtId });
-    // },
     me: async (parent, args, context) => {
       if (context.user) {
-        return User.findOne({ _id: context.user._id });
+        return User.findOne({ _id: context.user._id }).populate('likes');
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+    likedGames: async (parent, args, context) => {
+      // verify they are signed in
+      if (context.user) {
+        let data = await User.findOne({ _id: context.user._id })
+        // get auth token
+        let headers = await getHeaders()
+        // get logo information
+        let likes = await getLikedGames(data.likes, headers)
+        console.log(likes)
+        
+        return likes
       }
       throw new AuthenticationError('You need to be logged in!');
     },

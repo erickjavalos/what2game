@@ -1,4 +1,6 @@
 import React from 'react';
+import { useState, useEffect } from "react";
+
 import {
   ApolloClient,
   InMemoryCache,
@@ -6,7 +8,7 @@ import {
   createHttpLink,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 
 import Home from './pages/Home';
 import Signup from './pages/SignUp/Signup';
@@ -44,76 +46,36 @@ const client = new ApolloClient({
 });
 
 function App() {
-  return (
-    <ApolloProvider client={client}>
-      <Router>
-        <div className="flex flex-col">
-          <Header />
-           <div className="">
-            <Routes>
-              <Route 
-                path="/"
-                element={<Home />}
-              />
-              <Route 
-                path="/login" 
-                element={<Login />}
-              />
-              <Route 
-                path="/signup" 
-                element={<Signup />}
-              />
+    return (
+      <ApolloProvider client={client}>
+        <Router>
+          <AppRoutes />
+        </Router>
+      </ApolloProvider>
+    );
+  // }
 
-              <Route 
-                path="/api/games" 
-                element={<What2Play />}
-              />  
-               <Route 
-                path="/signup" 
-                element={<Signup />}
-              />
-             <Route 
-                path="/me" 
-                element={<Profile />}
-              />
-               {/*
-              <Route 
-                path="/profiles/:username" 
-                element={<Profile />}
-              />
-              <Route 
-                path="/thoughts/:thoughtId" 
-                element={<SingleThought />}
-              />
-              <Route 
-                path="/game/:gameId" 
-                element={<GameDetails />}
-              />
-              <Route 
-                path="/game/:gameId/reviews" 
-                element={<GameReviews />}
-              />
-              <Route 
-                path="/genres" 
-                element={<Genres />}
-              />
-              <Route 
-                path="/search" 
-                element={<SearchGame />}
-              />
-              <Route 
-                path="/streams" 
-                element={<Streams />}
-              /> */}
-            </Routes>
-          </div>
-        </div>
-
-      </Router>
-    </ApolloProvider>
-  
-   
-  );
 }
 
+
+function AppRoutes() {
+
+  return (
+    <div className="flex flex-col">
+      <Header />
+      <div className="">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/api/games" element={<What2Play />} />
+          <Route
+            path="/me"
+            element={<Profile />}
+          />
+        </Routes>
+      </div>
+    </div>
+  );
+}
 export default App;

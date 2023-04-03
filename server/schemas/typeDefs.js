@@ -17,7 +17,7 @@ const typeDefs = gql`
     email: String
     password: String
     fullName: String
-    likes: [String]
+    likes: [TwitchGame]
   }
   
   type Auth {
@@ -89,6 +89,7 @@ const typeDefs = gql`
     search(query: String!): [Game!]
     streams(gameId: ID!): [Stream!]
     me: User
+    likedGames: [TwitchGame]
     users: [User!]
     user(username: String!): User
     recommendedGames(genres: String, platforms: String, esrb_rating: String): [Game]
