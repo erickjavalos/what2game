@@ -16,7 +16,6 @@ const typeDefs = gql`
     username: String
     email: String
     password: String
-    fullName: String
     thoughts: [Thought]!
   }
   type Thought {
@@ -101,12 +100,10 @@ const typeDefs = gql`
     user: User
   }
   type TwitchGame {
-    id: String
-    name: String
-    box_art_url: String
-    genre: String
-    rating: String
-    igdb_id: String
+    id: String!
+    name: String!
+    box_art_url: String!
+    igdb_id: String!
   }
 
 
@@ -123,10 +120,12 @@ const typeDefs = gql`
     user(username: String!): User
     thoughts(username: String): [Thought!]
     thought(id: ID!): Thought
+    recommendedGames(genres: String, platforms: String, esrb_rating: String): [Game]
+
   }
 
   type Mutation {
-    addUser(username: String!, email: String!, password: String!, fullName: String!): Auth
+    addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
     addThought(thoughtText: String!, gameId: ID!): Thought
     addFriend(friendId: ID!): User

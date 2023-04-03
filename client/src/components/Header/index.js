@@ -38,44 +38,21 @@ const Header = () => {
 
           {/* login buttons*/}
           <div className="flex items-center lg:order-2">
-
-            {Auth.loggedIn() ? (
-            <>
-              <Link className="text-light items-center" to="/api/games">
-                <button className="bg-[rgb(234,222,218)] hover:bg-[rgb(46,41,78)] text-black hover:text-[rgb(234,222,218)] font-bold py-2 px-4 rounded-full mx-2">
-                  what2play
-                </button>
-              </Link>
-              <Link className="text-light items-center" to="/me">
-                <button className="bg-[rgb(234,222,218)] hover:bg-[rgb(46,41,78)] text-black hover:text-[rgb(234,222,218)] font-bold py-2 px-4 rounded-full mx-2">
-                  {Auth.getProfile().data.username}'s profile
-                </button>
-              </Link>
-              <Link className="text-light items-center" to="/">
-                <button className="bg-[rgb(234,222,218)] hover:bg-[rgb(46,41,78)] text-black hover:text-[rgb(234,222,218)] font-bold py-2 px-4 rounded-full mx-2" onClick={logout}>
-                  Logout
-                </button>
-              </Link>
-            </>
-            ) : (
-              <>
-              <Link className="text-light items-center" to="/api/games">
-                <button className="bg-[rgb(234,222,218)] hover:bg-[rgb(46,41,78)] text-black hover:text-[rgb(234,222,218)] font-bold py-2 px-4 rounded-full mx-2">
-                  what2play
-                </button>
-              </Link>
-              <Link className="text-light items-center" to="/login">
-                <button className="bg-[rgb(234,222,218)] hover:bg-[rgb(46,41,78)] text-black hover:text-[rgb(234,222,218)] font-bold py-2 px-4 rounded-full mx-2">
-                  Log in
-                </button>
-              </Link>
-              <Link className="text-light items-center" to="/signup">
-                <button className="bg-[rgb(234,222,218)] hover:bg-[rgb(46,41,78)] text-black hover:text-[rgb(234,222,218)] font-bold py-2 px-4 rounded-full mx-2">
-                  Sign up
-                </button>
-              </Link>
-              </>
-            )}            
+            <Link className="text-light items-center" to="/api/games">
+              <button className="bg-[rgb(234,222,218)] hover:bg-[rgb(46,41,78)] text-black hover:text-[rgb(234,222,218)] font-bold py-2 px-4 rounded-full mx-2">
+                what2play
+              </button>
+            </Link>
+            <Link className="text-light items-center" to="/login">
+              <button className="bg-[rgb(234,222,218)] hover:bg-[rgb(46,41,78)] text-black hover:text-[rgb(234,222,218)] font-bold py-2 px-4 rounded-full mx-2">
+                Log in
+              </button>
+            </Link>
+            <Link className="text-light items-center" to="/signup">
+              <button className="bg-[rgb(234,222,218)] hover:bg-[rgb(46,41,78)] text-black hover:text-[rgb(234,222,218)] font-bold py-2 px-4 rounded-full mx-2">
+                Sign up
+              </button>
+            </Link>
           </div>
       </div>
     </nav>
