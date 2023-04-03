@@ -13,6 +13,7 @@ import Signup from './pages/SignUp/Signup';
 import Login from './pages/Login/Login';
 import Header from './components/Header';
 import What2Play from './pages/What2Play/What2Play';
+import Profile from './pages/Profile/Profile'
 
 import './dist/output.css'
 import './index.css'
@@ -71,10 +72,11 @@ function App() {
                 path="/signup" 
                 element={<Signup />}
               />
-              {/*<Route 
+             <Route 
                 path="/me" 
                 element={<Profile />}
               />
+               {/*
               <Route 
                 path="/profiles/:username" 
                 element={<Profile />}

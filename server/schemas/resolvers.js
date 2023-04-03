@@ -72,50 +72,22 @@ const resolvers = {
       const gamesWithDetails = await Promise.all(gameDetailsPromises);
       return gamesWithDetails;
     },
-    
     async topTen() {
-      const endpoint = "https://api.twitch.tv/helix/games/top?first=20";
-      let authorizationObject = await getTwitchAuthorization();
+      // get auth token
+      let headers = await getHeaders()
+      // retreive top ten games
+      let topTenUM = await getTopGamesUnmerged(headers)
+      // get logo information
+      let topTen = await format(topTenUM, headers)
 
-      let { access_token, expires_in, token_type } = authorizationObject;
-
-      //token_type first letter must be uppercase    
-      token_type =
-      token_type.substring(0, 1).toUpperCase() +
-      token_type.substring(1, token_type.length);
-
-      let authorization = `${token_type} ${access_token}`;
-
-      let headers = {
-        authorization,
-        "Client-Id": clientId,
-      };
-
-      const response = await fetch(endpoint, {
-        headers,
-      })
-      // get json response 
-      const json = await response.json()
-
-      // filter out top ten games that have valid igdb ids
-      let cnt = 0;
-      let dataRtn = []
-      for (let i =0; i < json.data.length; i++)
-      {
-        if (cnt >= 10)
-        {
-          i = json.data.length + 1
-        }
-        else if (json.data[i].igdb_id !== "")
-        {
-          // console.log(json.data[i])
-          dataRtn.push(json.data[i])
-          cnt += 1;
-        }
-      }
-      // return the data to graphql
-      return dataRtn
-      
+      return topTen
+    },
+  
+    users: async () => {
+      return User.find();
+    },
+    user: async (parent, { username }) => {
+      return User.findOne({ username });
     },
     // users: async () => {
     //   return User.find().populate('thoughts');
@@ -130,12 +102,12 @@ const resolvers = {
     // thought: async (parent, { thoughtId }) => {
     //   return Thought.findOne({ _id: thoughtId });
     // },
-    // me: async (parent, args, context) => {
-    //   if (context.user) {
-    //     return User.findOne({ _id: context.user._id }).populate('thoughts');
-    //   }
-    //   throw new AuthenticationError('You need to be logged in!');
-    // },
+    me: async (parent, args, context) => {
+      if (context.user) {
+        return User.findOne({ _id: context.user._id });
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
   },
   // TODO: update this with new material
   Mutation: {
