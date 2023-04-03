@@ -167,10 +167,10 @@ const resolvers = {
     },
   
     users: async () => {
-      return User.find().populate('thoughts');
+      return User.find();
     },
     user: async (parent, { username }) => {
-      return User.findOne({ username }).populate('thoughts');
+      return User.findOne({ username });
     },
     // thoughts: async (parent, { username }) => {
     //   const params = username ? { username } : {};

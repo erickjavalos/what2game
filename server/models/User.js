@@ -22,12 +22,7 @@ const userSchema = new Schema({
   fullName: {
     type: String,
   },
-  thoughts: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Thought',
-    },
-  ],
+  likes: [String]
 });
 
 userSchema.pre('save', async function (next) {
