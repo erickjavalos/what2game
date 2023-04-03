@@ -1,14 +1,16 @@
 [
   {
-    "fullName": "b",
-    "username": "Brian Kernighan",
-    "email": "bkernighan@techfriends.dev",
-    "password": "password01"
+    "fullName": "Erick Avalos",
+    "username": "ejavalos",
+    "email": "avaloserick97@gmail.com",
+    "password": "test123",
+    "likes" : ["115", "114795"]
   },
   {
     "fullName": "m",
-    "username": "Max Kanat-Alexander",
-    "email": "mkanatalexander@techfriends.dev",
-    "password": "password02"
+    "username": "testaccount",
+    "email": "avaloserick44@gmail.com",
+    "password": "test123",
+    "likes" : ["115"]
   }
 ]

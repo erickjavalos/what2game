@@ -15,3 +15,16 @@ export const GET_TOP_TEN = gql`
     }
   }
 `
+
+export const QUERY_ME = gql`
+  query Query {
+    me {
+      fullName
+      likes
+      email
+      password
+      username
+      _id
+    }
+  }
+`
