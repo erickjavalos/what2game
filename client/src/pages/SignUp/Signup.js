@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-import { LOGIN_USER } from '../../utils/mutations';
+import { ADD_USER } from '../../utils/mutations';
 import './style.css'
 import Header from '../../components/Header';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -12,8 +12,8 @@ import 'font-awesome/css/font-awesome.min.css';
 import Auth from '../../utils/auth';
 
 const Signup = (props) => {
-  const [formState, setFormState] = useState({ fullName: '', username: '', email: '', password: '' });
-  const [login, { error, data }] = useMutation(LOGIN_USER);
+  const [formState, setFormState] = useState({ username: '', email: '', password: '', });
+  const [addUser, { error, data }] = useMutation(ADD_USER);
 
   // update state based on form input changes
   const handleChange = (event) => {
@@ -28,21 +28,22 @@ const Signup = (props) => {
   // submit form
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    console.log(formState);
     try {
-      const { data } = await login({
+      const { data } = await addUser({
         variables: { ...formState },
       });
 
-      Auth.login(data.login.token);
+      Auth.login(data.addUser.token);
     } catch (e) {
       console.error(e);
     }
 
     // clear form values
     setFormState({
+      username: '',
       email: '',
       password: '',
+      fullName: ''
     });
   };
 

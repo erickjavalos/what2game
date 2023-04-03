@@ -164,14 +164,14 @@ const resolvers = {
       let topTen = await format(topTenUM, headers)
 
       return topTen
-    }
-    
-    // users: async () => {
-    //   return User.find().populate('thoughts');
-    // },
-    // user: async (parent, { username }) => {
-    //   return User.findOne({ username }).populate('thoughts');
-    // },
+    },
+  
+    users: async () => {
+      return User.find().populate('thoughts');
+    },
+    user: async (parent, { username }) => {
+      return User.findOne({ username }).populate('thoughts');
+    },
     // thoughts: async (parent, { username }) => {
     //   const params = username ? { username } : {};
     //   return Thought.find(params).sort({ createdAt: -1 });
@@ -188,28 +188,28 @@ const resolvers = {
   },
   // TODO: update this with new material
   Mutation: {
-    // addUser: async (parent, { username, email, password }) => {
-    //   const user = await User.create({ username, email, password });
-    //   const token = signToken(user);
-    //   return { token, user };
-    // },
-    // login: async (parent, { email, password }) => {
-    //   const user = await User.findOne({ email });
+    addUser: async (parent, { username, email, password, fullName }) => {
+      const user = await User.create({ username, email, password, fullName });
+      const token = signToken(user);
+      return { token, user };
+    },
+    login: async (parent, { email, password }) => {
+      const user = await User.findOne({ email });
 
-    //   if (!user) {
-    //     throw new AuthenticationError('No user found with this email address');
-    //   }
+      if (!user) {
+        throw new AuthenticationError('No user found with this email address');
+      }
 
-    //   const correctPw = await user.isCorrectPassword(password);
+      const correctPw = await user.isCorrectPassword(password);
 
-    //   if (!correctPw) {
-    //     throw new AuthenticationError('Incorrect credentials');
-    //   }
+      if (!correctPw) {
+        throw new AuthenticationError('Incorrect credentials');
+      }
 
-    //   const token = signToken(user);
+      const token = signToken(user);
 
-    //   return { token, user };
-    // },
+      return { token, user };
+    },
     // addThought: async (parent, { thoughtText }, context) => {
     //   if (context.user) {
     //     const thought = await Thought.create({

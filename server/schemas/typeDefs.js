@@ -16,6 +16,7 @@ const typeDefs = gql`
     username: String
     email: String
     password: String
+    fullName: String
     thoughts: [Thought]!
   }
   type Thought {
@@ -125,7 +126,7 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    addUser(username: String!, email: String!, password: String!): Auth
+    addUser(username: String!, email: String!, password: String!, fullName: String!): Auth
     login(email: String!, password: String!): Auth
     addThought(thoughtText: String!, gameId: ID!): Thought
     addFriend(friendId: ID!): User
