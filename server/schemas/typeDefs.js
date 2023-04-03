@@ -71,10 +71,12 @@ const typeDefs = gql`
     user: User
   }
   type TwitchGame {
-    id: String!
-    name: String!
-    box_art_url: String!
-    igdb_id: String!
+    id: String
+    name: String
+    box_art_url: String
+    genre: String
+    rating: String
+    igdb_id: String
   }
 
 
@@ -92,9 +94,8 @@ const typeDefs = gql`
     recommendedGames(genres: String, platforms: String, esrb_rating: String): [Game]
   }
 
-
   type Mutation {
-    addUser(username: String!, email: String!, password: String!): Auth
+    addUser(username: String!, email: String!, password: String!, fullName: String!): Auth
     login(email: String!, password: String!): Auth
     addFriend(friendId: ID!): User
     removeFriend(friendId: ID!): User

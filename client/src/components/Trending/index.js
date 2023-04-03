@@ -1,10 +1,27 @@
 import React from 'react';
+import { useQuery } from '@apollo/client';
+import { GET_TOP_TEN } from '../../utils/queries';
+
+import TopTenGames from '../TopTenGames'
 
 
 const Trending = () => {
+  const { loading, data } = useQuery(GET_TOP_TEN);
+  const topTen = data?.topTen || [];
+
   return (
     <>
-        Trending 🔥
+        {loading ? (
+            // fix loading rendering on page
+            <div>Loading...</div>
+          ) : 
+            (
+              <TopTenGames
+                games={topTen}
+              />
+            )
+
+          }
     </>
   );
 };
