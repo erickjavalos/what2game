@@ -26,12 +26,12 @@ const TopTenGames = ({ games = [] }) => {
                     </div>
                     <div className="flex-grow">
                         <a href={'/asset?idgb_id=' + game.igdb_id} className="h-full flex items-center">
-                            <p className="mx-2 font-bold tracking-tight text-gray-900 dark:text-white">Genre: {game.genre}</p>
+                            <p className="mx-2 font-bold tracking-tight text-gray-900 dark:text-white">Genre: {(game.genre) !== 'null' ? game.genre : 'N/A'}</p>
                         </a>
                     </div>
                     <div className="flex-grow">
                         <a href={'/asset?idgb_id=' + game.igdb_id} className="h-full flex items-center">
-                            <p className="mx-2 mb-4 font-bold tracking-tight text-gray-900 dark:text-white">Rating: {Math.trunc(game.rating)}%</p>
+                            <p className="mx-2 mb-4 font-bold tracking-tight text-gray-900 dark:text-white">Rating: {(game.rating !== 'null') ? Math.trunc(game.rating) + '%' : 'N/A'}</p>
                         </a>
                     </div>
                 </div>
