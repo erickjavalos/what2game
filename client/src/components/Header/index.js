@@ -40,14 +40,6 @@ const Header = () => {
           <div className="flex items-center lg:order-2">
 
             {Auth.loggedIn() ? (
-              // <>
-              //   <Link className="btn btn-lg btn-info m-2" to="/me">
-              //     {Auth.getProfile().data.username}'s profile
-              //   </Link>
-              //   <button className="btn btn-lg btn-light m-2" onClick={logout}>
-              //     Logout
-              //   </button>
-              // </>
             <>
               <Link className="text-light items-center" to="/api/games">
                 <button className="bg-[rgb(234,222,218)] hover:bg-[rgb(46,41,78)] text-black hover:text-[rgb(234,222,218)] font-bold py-2 px-4 rounded-full mx-2">
