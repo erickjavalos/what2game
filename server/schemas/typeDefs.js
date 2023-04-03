@@ -89,7 +89,9 @@ const typeDefs = gql`
     me: User
     users: [User!]
     user(username: String!): User
+    recommendedGames(genres: String, platforms: String, esrb_rating: String): [Game]
   }
+
 
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
