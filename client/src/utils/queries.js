@@ -16,15 +16,35 @@ export const GET_TOP_TEN = gql`
   }
 `
 
+export const GET_LIKED_GAMES = gql`
+  query LikedGames {
+    likedGames {
+      id
+      genre
+      box_art_url
+      name
+      rating
+      igdb_id
+    }
+  }
+`
+
+
 export const QUERY_ME = gql`
   query Query {
     me {
+      likes {
+        name
+        genre
+        rating
+        id
+        igdb_id
+        box_art_url
+      }
       fullName
-      likes
       email
       password
       username
-      _id
     }
   }
 `
