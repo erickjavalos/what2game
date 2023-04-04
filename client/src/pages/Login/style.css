@@ -92,3 +92,7 @@ main {
     height: 40px;
     margin: 16px auto;
 }
+
+.headerButton {
+    width: 100px;
+}
