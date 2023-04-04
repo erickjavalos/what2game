@@ -12,7 +12,7 @@ import 'font-awesome/css/font-awesome.min.css';
 import Auth from '../../utils/auth';
 
 const Signup = (props) => {
-  const [formState, setFormState] = useState({ username: '', email: '', password: '', });
+  const [formState, setFormState] = useState({fullName: '', username: '', email: '', password: '', });
   const [addUser, { error, data }] = useMutation(ADD_USER);
 
   // update state based on form input changes
@@ -49,8 +49,7 @@ const Signup = (props) => {
 
   return (
     <div className="background flex flex-col justify-center">
-      <Header />
-      <main className="mt-10 flex flex-col justify-stretch">
+      <main className="m-auto flex flex-col justify-center">
         <div className="card flex flex-row columns-2 h-full">
           <div className="leftColumn flex flex-col h-full w-2/6">
             <div className="leftSide signup loginSection h-full flex flex-col justify-center"><FontAwesomeIcon size='2x' icon={faCircleUser} /><div className="mx-auto pt-2">Log in</div></div>

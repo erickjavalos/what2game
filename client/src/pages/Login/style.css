@@ -13,10 +13,7 @@
     /* Preserve aspet ratio */
     min-width: 100%;
     min-height: 100%;
-}
-
-header {
-    display: none;
+    z-index: -1;
 }
 
 main {
