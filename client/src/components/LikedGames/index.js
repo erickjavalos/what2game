@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { faHeart } from '@fortawesome/free-regular-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const LikedGames = ({ games = [] }) => {
   if (!games.length) {
@@ -54,7 +56,7 @@ const LikedGames = ({ games = [] }) => {
                     </div>
                     <div className="flex justify-center items-center mt-4">
                         <button>
-                            <img src="heart-icon.png" alt="heart icon" className="w-6 h-6"/>
+                            <FontAwesomeIcon icon={faHeart} />
                         </button>
                     </div>
                 </div>
