@@ -311,67 +311,42 @@ const resolvers = {
     },
     addLike: async (parent, args, context) =>
     {
-      // console.log(name, box_art_url, genre, rating, igdb_id)
       if (context.user) {
-        console.log(context.user._id)
-        console.log(args)
-        return User.updateOne(
-          { _id: context.user._id }, // Replace `userId` with the user ID you want to update
-          { $addToSet: { likes: args } },
-          (err, result) => {
-            if (err) {
-              console.error(err);
-            } else {
-              console.log("New like added successfully!");
-            }
+        try {
+          const result = await User.updateOne(
+            { _id: context.user._id, "likes.igdb_id": { $ne: args.igdb_id } },
+            { $addToSet: { "likes": args } },
+          );
+          if (result.nModified === 0) {
+            console.log("Like already exists in user's likes");
+            return null;
           }
-        );
-
-        // return User.findOne({ _id: context.user._id }).populate('likes');
+          console.log("New like added successfully!");
+          return result;
+        } catch (err) {
+          console.error(err);
+        }
       }
       throw new AuthenticationError('You need to be logged in!');
-      // User.updateOne(
-      //   { _id: userId }, // Replace `userId` with the user ID you want to update
-      //   { $addToSet: { likes: newLike } },
-      //   (err, result) => {
-      //     if (err) {
-      //       console.error(err);
-      //     } else {
-      //       console.log("New like added successfully!");
-      //     }
-      //   }
-      // );
+    },
+    deleteLike: async (parent, args , context) => {
+      if (context.user) {
+        try {
+          const result = await User.updateOne(
+            { _id: context.user._id },
+            { $pull: { likes: { igdb_id: args.igdb_id } } }
+          );
+          console.log("Like deleted successfully!");
+          return result;
+        } catch (err) {
+          console.error(err);
+        }
+      }
+      throw new AuthenticationError('You need to be logged in!');
+
     }
-    // addThought: async (parent, { thoughtText }, context) => {
-    //   if (context.user) {
-    //     const thought = await Thought.create({
-    //       thoughtText,
-    //       thoughtAuthor: context.user.username,
-    //     });
-
-    //     await User.findOneAndUpdate(
-    //       { _id: context.user._id },
-    //       { $addToSet: { thoughts: thought._id } }
-    //     );
-
-    //     return thought;
-    //   }
-    //   throw new AuthenticationError('You need to be logged in!');
-    // },
   },
 };
-    // Query: {
-    //   async streams(parent, { id }, context, info) {
-    //     const response = await fetch(`https://api.twitch.tv/helix/streams?game_id=${id}`, {
-    //       headers: {
-    //         'Client-ID': 'YOUR_TWITCH_CLIENT_ID',
-    //         Authorization: `Bearer YOUR_TWITCH_ACCESS_TOKEN`,
-    //       },
-    //     });
-    //     const json = await response.json();
-    //     return json.data;
-    //   },
-    // },
 
 
 module.exports = resolvers;
