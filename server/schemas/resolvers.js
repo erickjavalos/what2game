@@ -251,6 +251,25 @@ const resolvers = {
       }
       throw new AuthenticationError('You need to be logged in!');
     },
+     // added for What2Play component
+     async recommendedGames(parent, { genres, platforms, esrb_rating }, context, info) {
+      const params = new URLSearchParams({
+        key: 'df0a6dbf13504aefb411f7298892a149',
+        ...(genres ? { genres } : {}),
+        ...(platforms ? { platforms } : {}),
+        ...(esrb_rating ? { esrb_rating } : {}),
+      });
+      const response = await fetch(`https://api.rawg.io/api/games?${params.toString()}`);
+      const json = await response.json();
+      const games = json.results;
+      const gameDetailsPromises = games.map(async (game) => {
+        const gameDetailsResponse = await fetch(`https://api.rawg.io/api/games/${game.id}?key=df0a6dbf13504aefb411f7298892a149`);
+        const gameDetailsJson = await gameDetailsResponse.json();
+        return gameDetailsJson;
+      });
+      const gamesWithDetails = await Promise.all(gameDetailsPromises);
+      return gamesWithDetails;
+    },
     likedGames: async (parent, args, context) => {
       // verify they are signed in
       if (context.user) {

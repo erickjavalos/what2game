@@ -52,6 +52,11 @@ const LikedGames = ({ games = [] }) => {
                             <p className="mx-2 mb-4 font-bold tracking-tight text-gray-900 dark:text-white">Rating: {(game.rating !== 'null') ? Math.trunc(game.rating) + '%' : 'N/A'}</p>
                         </a>
                     </div>
+                    <div className="flex justify-center items-center mt-4">
+                        <button>
+                            <img src="heart-icon.png" alt="heart icon" className="w-6 h-6"/>
+                        </button>
+                    </div>
                 </div>
             </div>
             ))}
