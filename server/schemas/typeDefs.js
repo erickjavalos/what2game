@@ -97,12 +97,13 @@ const typeDefs = gql`
 
   type Mutation {
     addUser(username: String!, email: String!, password: String!, fullName: String!): Auth
+    addLike(name: String!, box_art_url: String!, genre: String!, rating: String!, igdb_id: String!) : User
     login(email: String!, password: String!): Auth
     addFriend(friendId: ID!): User
     removeFriend(friendId: ID!): User
     addGameReview(title: String!, body: String!, rating: Float!, gameId: ID!): GameReview
     deleteGameReview(reviewId: ID!): GameReview
-   
+
   }
 `;
 

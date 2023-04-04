@@ -1,5 +1,52 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { useMutation } from '@apollo/client';
+import { faHeart } from '@fortawesome/free-regular-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ADD_LIKE } from '../../utils/mutations';
+
+
+import Auth from '../../utils/auth';
+
+
+const HeartIcon = ({game = []}) => {
+    const [isClicked, setIsClicked] = useState(false);
+    const [addLike, { error, data }] = useMutation(ADD_LIKE);
+
+  
+    const heartStyle = { color: isClicked ? 'red' : 'white' };
+  
+    const handleClick = async () => {
+        // XOR expression
+        setIsClicked(!isClicked);
+        console.log(game)
+
+        // navigate to login page if not authenticated
+        if (!Auth.loggedIn()){
+            window.location.replace("/login")
+            return
+        }
+
+        try {
+            const { data } = await addLike({
+              variables: { 
+                name: game.name,
+                boxArtUrl: game.box_art_url,
+                genre: game.genre,
+                rating: game.rating,
+                igdbId: game.igdb_id 
+            },
+            });
+            console.log('executed')
+            console.log(data)
+      
+          } catch (e) {
+            console.error(e);
+          }
+    };
+  
+    return <FontAwesomeIcon icon={faHeart} style={heartStyle} onClick={handleClick} />;
+}
 
 const TopTenGames = ({ games = [] }) => {
   if (!games.length) {
@@ -16,6 +63,13 @@ const TopTenGames = ({ games = [] }) => {
             games.map((game) => (
             <div key={game.id} className="w-full md:w-1/3 lg:w-1/4 p-3 text-center m-1">
                 <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 h-full flex flex-col hover:bg-[rgb(186,215,242)]">
+                    <div className="flex justify-center items-center mt-4">
+                        <button>
+                            <HeartIcon  
+                                game={game}    
+                            />
+                        </button>
+                    </div>
                     <a href={'/asset?idgb_id=' + game.igdb_id} className="mt-2 flex items-center justify-center">
                         <img className="w-24 h-24 rounded-full shadow-lg" src={game.box_art_url} alt=""/>
                     </a>

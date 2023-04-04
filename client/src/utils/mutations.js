@@ -24,3 +24,23 @@ export const ADD_USER = gql`
     }
   }
 `;
+
+export const ADD_LIKE = gql`
+  mutation AddLike($name: String!, $boxArtUrl: String!, $genre: String!, $rating: String!, $igdbId: String!) {
+    addLike(name: $name, box_art_url: $boxArtUrl, genre: $genre, rating: $rating, igdb_id: $igdbId) {
+      _id
+      email
+      fullName
+      password
+      username
+      likes {
+        genre
+        id
+        igdb_id
+        name
+        rating
+      }
+      
+    }
+  }
+`

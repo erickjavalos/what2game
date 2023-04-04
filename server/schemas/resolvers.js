@@ -309,6 +309,39 @@ const resolvers = {
 
       return { token, user };
     },
+    addLike: async (parent, args, context) =>
+    {
+      // console.log(name, box_art_url, genre, rating, igdb_id)
+      if (context.user) {
+        console.log(context.user._id)
+        console.log(args)
+        return User.updateOne(
+          { _id: context.user._id }, // Replace `userId` with the user ID you want to update
+          { $addToSet: { likes: args } },
+          (err, result) => {
+            if (err) {
+              console.error(err);
+            } else {
+              console.log("New like added successfully!");
+            }
+          }
+        );
+
+        // return User.findOne({ _id: context.user._id }).populate('likes');
+      }
+      throw new AuthenticationError('You need to be logged in!');
+      // User.updateOne(
+      //   { _id: userId }, // Replace `userId` with the user ID you want to update
+      //   { $addToSet: { likes: newLike } },
+      //   (err, result) => {
+      //     if (err) {
+      //       console.error(err);
+      //     } else {
+      //       console.log("New like added successfully!");
+      //     }
+      //   }
+      // );
+    }
     // addThought: async (parent, { thoughtText }, context) => {
     //   if (context.user) {
     //     const thought = await Thought.create({
