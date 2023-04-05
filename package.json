@@ -1,22 +1,27 @@
 {
-  "name": "tech-friends",
+  "name": "what2game",
   "version": "1.0.0",
   "description": "",
   "main": "server/server.js",
   "scripts": {
-    "start": "nodemon server/server.js",
-    "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
-    "install": "cd client && npm i && cd ../server/ && npm i",
+    "start": "node server.js",
+    "develop": "concurrently \"npm run start\" \"cd client && npm start\"",
+    "install": "cd client && npm i",
     "seed": "cd server && npm run seed",
     "build": "cd client && npm run build",
-    "clean": "rm -rf node_modules/ package-lock.json && cd client/ && rm -rf node_modules/ package-lock.json && cd ../server/ && rm -rf node_modules package-lock.json && cd -"
+    "clean": "rm -rf node_modules/ package-lock.json && cd client/ && rm -rf node_modules/ package-lock.json",
+    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
+
+  },
+  "engines": {
+    "node": "8.9.2"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "concurrently": "^5.1.0",
-    "tailwindcss": "^3.3.1"
+    "nodemon": "^2.0.22"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
@@ -30,9 +35,12 @@
     "font-awesome": "^4.7.0",
     "graphql": "^15.8.0",
     "graphql-yoga": "^3.8.0",
-    "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.0.3",
     "nodemon": "^2.0.22",
-    "semver": "^7.3.8"
+    "semver": "^7.3.8",
+    "bcrypt": "^5.0.0",
+    "dotenv": "^16.0.3",
+    "jsonwebtoken": "^8.5.1",
+    "tailwindcss": "^3.3.1"
   }
 }
