@@ -38,6 +38,7 @@ const Header = () => {
     event.preventDefault();
     // fetchGameDetails();
     navigate("/game?game="+gameQuery)
+    navigate(0)
   }
   return (
     <>
