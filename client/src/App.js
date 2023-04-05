@@ -8,14 +8,21 @@ import {
   createHttpLink,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, Link } from 'react-router-dom';
 
 import Home from './pages/Home';
 import Signup from './pages/SignUp/Signup';
 import Login from './pages/Login/Login';
 import Header from './components/Header';
-import What2Play from './pages/What2Play/What2Play';
-import Profile from './pages/Profile/Profile'
+import Profile from './pages/Profile/Profile';
+import Action from './components/Action';
+import Adventure from './components/Adventure';
+import Casual from './components/Casual';
+import Puzzle from './components/Puzzle';
+import Strategy from './components/Strategy';
+import Trending from './components/Trending';
+import Genres from './components/Genres';
+import GameDetails from './components/GameDetails';
 
 import './dist/output.css'
 import './index.css'
@@ -46,20 +53,16 @@ const client = new ApolloClient({
 });
 
 function App() {
-    return (
-      <ApolloProvider client={client}>
-        <Router>
-          <AppRoutes />
-        </Router>
-      </ApolloProvider>
-    );
-  // }
-
+  return (
+    <ApolloProvider client={client}>
+      <Router>
+        <AppRoutes />
+      </Router>
+    </ApolloProvider>
+  );
 }
 
-
 function AppRoutes() {
-
   return (
     <div className="flex flex-col">
       <Header />
@@ -68,14 +71,20 @@ function AppRoutes() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/api/games" element={<What2Play />} />
-          <Route
-            path="/me"
-            element={<Profile />}
-          />
+          <Route path="/action" element={<Action />} />
+          <Route path="/adventure" element={<Adventure />} />
+          <Route path="/casual" element={<Casual />} />
+          <Route path="/puzzle" element={<Puzzle />} />
+          <Route path="/strategy" element={<Strategy />} />
+          <Route path="/trending" element={<Trending />} />
+          <Route path="/genres" element={<Genres />} />
+          <Route path="/me" element={<Profile />} />
+          <Route path="/gamedetails" element={<GameDetails />} />
         </Routes>
       </div>
     </div>
   );
 }
+
+
 export default App;
