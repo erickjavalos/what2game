@@ -26,8 +26,8 @@ export const ADD_USER = gql`
 `;
 
 export const ADD_LIKE = gql`
-  mutation Mutation($name: String!, $boxArtUrl: String!, $genre: String!, $rating: String!, $igdbId: String!) {
-    addLike(name: $name, box_art_url: $boxArtUrl, genre: $genre, rating: $rating, igdb_id: $igdbId) {
+  mutation Mutation($name: String!, $boxArtUrl: String!, $genre: String!, $rating: String!) {
+    addLike(name: $name, box_art_url: $boxArtUrl, genre: $genre, rating: $rating) {
       _id
       email
       fullName
@@ -36,7 +36,6 @@ export const ADD_LIKE = gql`
       likes {
         genre
         id
-        igdb_id
         name
         rating
       }
@@ -45,12 +44,9 @@ export const ADD_LIKE = gql`
   }
 `
 export const DELETE_LIKE = gql`
-  mutation DeleteLike($igdbId: String!) {
-    deleteLike(igdb_id: $igdbId) {
-      fullName
-      likes {
-        name
-      }
+  mutation DeleteLike($name: String!) {
+    deleteLike(name: $name) {
+      username
     }
   }
 `

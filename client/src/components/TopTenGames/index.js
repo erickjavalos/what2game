@@ -34,7 +34,6 @@ const HeartIcon = ({game = []}) => {
                 boxArtUrl: game.box_art_url,
                 genre: game.genre,
                 rating: game.rating,
-                igdbId: game.igdb_id 
             },
             });
             console.log('executed')

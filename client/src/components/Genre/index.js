@@ -9,7 +9,7 @@ import { ADD_LIKE } from '../../utils/mutations';
 import Auth from '../../utils/auth';
 
 
-const HeartIcon = ({game = []}) => {
+const HeartIcon = ({game = [], genre}) => {
     const [isClicked, setIsClicked] = useState(false);
     const [addLike, { error, data }] = useMutation(ADD_LIKE);
 
@@ -20,6 +20,8 @@ const HeartIcon = ({game = []}) => {
         // XOR expression
         setIsClicked(!isClicked);
         console.log(game)
+        console.log('rating')
+        console.log(game.rating.toFixed(2))
 
         // navigate to login page if not authenticated
         if (!Auth.loggedIn()){
@@ -31,10 +33,9 @@ const HeartIcon = ({game = []}) => {
             const { data } = await addLike({
               variables: { 
                 name: game.name,
-                boxArtUrl: game.box_art_url,
-                genre: game.genre,
-                rating: game.rating,
-                igdbId: game.igdb_id 
+                boxArtUrl: game.background_image,
+                genre: genre,
+                rating: game.rating.toFixed(2),
             },
             });
             console.log('executed')
@@ -74,6 +75,7 @@ const Genre = ({ games = [], title, genre }) => {
                             <button>
                                 <HeartIcon  
                                     game={game}    
+                                    genre={genre}
                                 />
                             </button>
                         </div>

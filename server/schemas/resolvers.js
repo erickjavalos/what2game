@@ -314,7 +314,7 @@ const resolvers = {
       if (context.user) {
         try {
           const result = await User.updateOne(
-            { _id: context.user._id, "likes.igdb_id": { $ne: args.igdb_id } },
+            { _id: context.user._id, "likes.name": { $ne: args.name } },
             { $addToSet: { "likes": args } },
           );
           if (result.nModified === 0) {
@@ -332,6 +332,7 @@ const resolvers = {
     deleteLike: async (parent, args , context) => {
       // console.log('hit')
       // console.log(context.user)
+      console.log(args)
       if (context.user) {
         try {
           const user = await User.findOne({ _id: context.user._id });
@@ -345,7 +346,7 @@ const resolvers = {
             // console.log(user.likes)
             const result = await User.updateOne(
               { _id: context.user._id },
-              { $pull: { likes: { igdb_id: args.igdb_id } } },
+              { $pull: { likes: { name: args.name } } },
               { new: true }
             );
             return result
@@ -355,7 +356,7 @@ const resolvers = {
             // console.log(user.likes)
             const result = await User.updateOne(
               { _id: context.user._id },
-              { $pull: { likes: { igdb_id: args.igdb_id } } }
+              { $pull: { likes: { name: args.name } } }
             );
             // console.log("Like deleted successfully!");
             return result;

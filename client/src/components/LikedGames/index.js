@@ -20,7 +20,7 @@ function HeartIcon({game = []}) {
         console.log(game)
         const { data } = await deleteLike({
           variables: { 
-            igdbId: game.igdb_id 
+            name: game.name 
         },
         });
         console.log('executed')
