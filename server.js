@@ -4,8 +4,6 @@ const path = require('path');
 const { authMiddleware } = require('./utils/auth');
 const buildPath = path.join(__dirname, 'build');
 
-
-
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
 
