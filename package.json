@@ -2,7 +2,7 @@
   "name": "what2game",
   "version": "1.0.0",
   "description": "",
-  "main": "server/server.js",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "develop": "concurrently \"npm run start\" \"cd client && npm start\"",
