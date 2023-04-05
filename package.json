@@ -9,11 +9,8 @@
     "install": "cd client && npm i",
     "seed": "cd server && npm run seed",
     "build": "cd client && npm run build",
-    "clean": "rm -rf node_modules/ package-lock.json && cd client/ && rm -rf node_modules/ package-lock.json",
+    "clean": "rm -rf node_modules/ package-lock.json && cd client/ && rm -rf node_modules/ package-lock.json"
 
-  },
-  "engines": {
-    "node": "19.6.0"
   },
   "keywords": [],
   "author": "",
