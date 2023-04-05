@@ -62,7 +62,7 @@ What2Game is a React app designed to help users find the perfect game to play. U
 
 ## Sample
 
-Include a sample image or GIF of the app in action.
+<!-- Include a sample image or GIF of the app in action. -->
 
 ## Contributors
 
