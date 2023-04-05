@@ -16,6 +16,8 @@ import Login from './pages/Login/Login';
 import Header from './components/Header';
 import What2Play from './pages/What2Play/What2Play';
 import Profile from './pages/Profile/Profile';
+import Game from './pages/Game/';
+
 
 
 import './dist/output.css'
@@ -73,6 +75,10 @@ function AppRoutes() {
           <Route
             path="/me"
             element={<Profile />}
+          />
+           <Route
+            path="/game"
+            element={<Game />}
           />
         </Routes>
       </div>

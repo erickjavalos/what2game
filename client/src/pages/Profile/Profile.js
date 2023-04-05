@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 
@@ -26,6 +26,8 @@ const Profile = () => {
       </h4>
     );
   }
+
+  
   return (
     <>
 

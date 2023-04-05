@@ -1,13 +1,11 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import { API_KEY } from "../../components/config/config";
 import { useMutation } from '@apollo/client';
 import { faHeart } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ADD_LIKE } from '../../utils/mutations';
-
-
 import Auth from '../../utils/auth';
-
 
 const HeartIcon = ({game = [], genre}) => {
     const [isClicked, setIsClicked] = useState(false);
@@ -49,33 +47,69 @@ const HeartIcon = ({game = [], genre}) => {
     return <FontAwesomeIcon icon={faHeart} style={heartStyle} onClick={handleClick} />;
 }
 
-const Genre = ({ games = [], title, genre }) => {
-    if (!games.length) {
-        return (
-            <>
-            <div className="mt-6 mb-6 text-center">
-                <h5 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">{title}</h5>
-            </div>
 
-            <h3 className='text-white text-center'>loading...</h3>
-            </>)
-    }
+const Game = () => {
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const myParam = queryParams.get('game');
 
+    const [gameQuery, setGameQuery] = useState("");
+    const [game, setGame] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        async function fetchGameDetails() {
+            setIsLoading(true);
+            setError(null);
+            try {
+              const response = await fetch(
+                `https://api.rawg.io/api/games?search=${encodeURIComponent(
+                    myParam
+                )}&key=${API_KEY}`
+              );
+              if (!response.ok) {
+                throw new Error("Could not fetch game details");
+              }
+              const data = await response.json();
+              const firstResult = data.results[0];
+              if (!firstResult) {
+                throw new Error("No game found");
+              }
+              const gameSlug = firstResult.slug;
+              const gameResponse = await fetch(
+                `https://api.rawg.io/api/games/${gameSlug}?key=${API_KEY}`
+              );
+              if (!gameResponse.ok) {
+                throw new Error("Could not fetch game details");
+              }
+              const gameData = await gameResponse.json();
+              setGame(gameData);
+            } catch (error) {
+              setError(error.message);
+            } finally {
+              setIsLoading(false);
+            }
+            console.log(game)
+        }
+        fetchGameDetails();
+      }, []);
+  
     return (
         <>
-            <div className="mt-6 mb-6 text-center">
-                <h5 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">{title}</h5>
-            </div>
             <div className='flex flex-wrap justify-center'>
-            {games &&
-                games.map((game) => (
+        
+            {isLoading && <div>Loading game details...</div>}
+            {error && <div>{error}</div>}
+            {game && (
+                
                 <div key={game.id} className="w-full md:w-1/3 lg:w-1/4 p-3 text-center m-1">
                     <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 h-full flex flex-col">
                         <div className="flex justify-center items-center mt-4">
                             <button>
                                 <HeartIcon  
                                     game={game}    
-                                    genre={genre}
+                                    genre={game.genres[0].name}
                                 />
                             </button>
                         </div>
@@ -89,7 +123,7 @@ const Genre = ({ games = [], title, genre }) => {
                         </div>
                         <div className="flex-grow">
                             <a  className="h-full flex items-center">
-                                <p className="mx-2 font-bold tracking-tight text-gray-900 dark:text-white">Genre: {genre}</p>
+                                <p className="mx-2 font-bold tracking-tight text-gray-900 dark:text-white">Genre: {game.genres[0].name}</p>
                             </a>
                         </div>
                         <div className="flex-grow">
@@ -99,14 +133,10 @@ const Genre = ({ games = [], title, genre }) => {
                         </div>
                     </div>
                 </div>
-                ))}
-
+                )}
             </div>
-        
         </>
     );
 };
 
-export default Genre;
-
-              
+export default Game;
