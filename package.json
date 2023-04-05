@@ -10,7 +10,6 @@
     "seed": "cd server && npm run seed",
     "build": "cd client && npm run build",
     "clean": "rm -rf node_modules/ package-lock.json && cd client/ && rm -rf node_modules/ package-lock.json",
-    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
 
   },
   "engines": {
