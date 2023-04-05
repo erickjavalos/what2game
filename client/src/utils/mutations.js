@@ -44,3 +44,13 @@ export const ADD_LIKE = gql`
     }
   }
 `
+export const DELETE_LIKE = gql`
+  mutation DeleteLike($igdbId: String!) {
+    deleteLike(igdb_id: $igdbId) {
+      fullName
+      likes {
+        name
+      }
+    }
+  }
+`

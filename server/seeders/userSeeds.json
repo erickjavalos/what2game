@@ -3,24 +3,7 @@
     "fullName": "Erick Avalos",
     "username": "ejavalos",
     "email": "avaloserick97@gmail.com",
-    "password": "test123",
-    "likes" : [
-      {
-        "name": "League of Legends",
-        "box_art_url" : "https://static-cdn.jtvnw.net/ttv-boxart/21779-300x300.jpg",
-        "genre": "Role-playing (RPG)",
-        "rating": "76.852468842574",
-        "igdb_id": "115"
-      },
-      {
-        "name": "Apex Legends",
-        "box_art_url" : "https://static-cdn.jtvnw.net/ttv-boxart/511224-300x300.jpg",
-        "genre": "Shooter",
-        "rating": "77.4569285939217",
-        "igdb_id": "114795"
-      }
-
-    ]
+    "password": "test123"
   },
   {
     "fullName": "m",

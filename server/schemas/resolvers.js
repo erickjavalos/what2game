@@ -96,8 +96,8 @@ async function getLikedGames(liked, headers)
             })
             // // get json response 
             const genreName = await genreResp.json()
-            console.log('genrename')
-            console.log(genreName)
+            // console.log('genrename')
+            // console.log(genreName)
             // assign genre
             genre = genreName[0]?.name || "null"
 
@@ -278,7 +278,7 @@ const resolvers = {
         let headers = await getHeaders()
         // get logo information
         let likes = await getLikedGames(data.likes, headers)
-        console.log(likes)
+        // console.log(likes)
         
         return likes
       }
@@ -318,10 +318,10 @@ const resolvers = {
             { $addToSet: { "likes": args } },
           );
           if (result.nModified === 0) {
-            console.log("Like already exists in user's likes");
+            // console.log("Like already exists in user's likes");
             return null;
           }
-          console.log("New like added successfully!");
+          // console.log("New like added successfully!");
           return result;
         } catch (err) {
           console.error(err);
@@ -330,14 +330,37 @@ const resolvers = {
       throw new AuthenticationError('You need to be logged in!');
     },
     deleteLike: async (parent, args , context) => {
+      // console.log('hit')
+      // console.log(context.user)
       if (context.user) {
         try {
-          const result = await User.updateOne(
-            { _id: context.user._id },
-            { $pull: { likes: { igdb_id: args.igdb_id } } }
-          );
-          console.log("Like deleted successfully!");
-          return result;
+          const user = await User.findOne({ _id: context.user._id });
+          if (!user) {
+            throw new Error('User not found');
+          }
+          // console.log(user.likes)
+          if (user.likes.length === 1)
+          {
+            // console.log('legnth is 1')
+            // console.log(user.likes)
+            const result = await User.updateOne(
+              { _id: context.user._id },
+              { $pull: { likes: { igdb_id: args.igdb_id } } },
+              { new: true }
+            );
+            return result
+          }
+          else {
+            // console.log('length is good')
+            // console.log(user.likes)
+            const result = await User.updateOne(
+              { _id: context.user._id },
+              { $pull: { likes: { igdb_id: args.igdb_id } } }
+            );
+            // console.log("Like deleted successfully!");
+            return result;
+          }
+          
         } catch (err) {
           console.error(err);
         }

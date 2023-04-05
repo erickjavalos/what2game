@@ -2,14 +2,34 @@ import React from 'react';
 import { useState } from 'react';
 import { faHeart } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useMutation } from '@apollo/client';
+import { DELETE_LIKE } from '../../utils/mutations';
 
-function HeartIcon() {
+
+function HeartIcon({game = []}) {
     const [isClicked, setIsClicked] = useState(true);
+    const [deleteLike, { error, data }] = useMutation(DELETE_LIKE);
+
   
     const heartStyle = { color: isClicked ? 'red' : 'white' };
   
-    const handleClick = () => {
+    const handleClick = async () => {
       setIsClicked(!isClicked);
+
+      try {
+        console.log(game)
+        const { data } = await deleteLike({
+          variables: { 
+            igdbId: game.igdb_id 
+        },
+        });
+        console.log('executed')
+        console.log(data)
+        window.location.reload(); // Refresh the page
+  
+      } catch (e) {
+        console.error(e);
+      }
     };
   
     return <FontAwesomeIcon icon={faHeart} style={heartStyle} onClick={handleClick} />;
@@ -50,7 +70,9 @@ const LikedGames = ({ games = [] }) => {
                     <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 h-full flex flex-col hover:bg-[rgb(186,215,242)]">
                         <div className="flex justify-center items-center mt-4">
                             <button>
-                                <HeartIcon />
+                                <HeartIcon  
+                                    game={game}    
+                                />
                             </button>
                         </div>
                         <a href={'/asset?idgb_id=' + game.igdb_id} className="mt-2 flex items-center justify-center">

@@ -37,9 +37,10 @@ const userSchema = new Schema({
     },
     igdb_id: {
       type: String,
-    }
+    },
   }]
-});
+}, { _id: true, timestamps: true });
+
 
 userSchema.pre('save', async function (next) {
   if (this.isNew || this.isModified('password')) {
