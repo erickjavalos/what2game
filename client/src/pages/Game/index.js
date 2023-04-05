@@ -90,6 +90,7 @@ const Game = () => {
             } finally {
               setIsLoading(false);
             }
+            console.log('game(()()()()()')
             console.log(game)
         }
         fetchGameDetails();
@@ -100,16 +101,20 @@ const Game = () => {
             <div className='flex flex-wrap justify-center'>
         
             {isLoading && <div>Loading game details...</div>}
+            {
+            // console.log(game.genres.length)
+            
+            }
             {error && <div>{error}</div>}
+            
             {game && (
-                
                 <div key={game.id} className="w-full md:w-1/3 lg:w-1/4 p-3 text-center m-1">
                     <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 h-full flex flex-col">
                         <div className="flex justify-center items-center mt-4">
                             <button>
                                 <HeartIcon  
                                     game={game}    
-                                    genre={game.genres[0].name}
+                                    genre={game.genres.length === 0 ? "N/A" : game.genres[0].name}
                                 />
                             </button>
                         </div>
@@ -123,7 +128,7 @@ const Game = () => {
                         </div>
                         <div className="flex-grow">
                             <a  className="h-full flex items-center">
-                                <p className="mx-2 font-bold tracking-tight text-gray-900 dark:text-white">Genre: {game.genres[0].name}</p>
+                                <p className="mx-2 font-bold tracking-tight text-gray-900 dark:text-white">Genre: {game.genres.length === 0 ? "N/A" : game.genres[0].name}</p>
                             </a>
                         </div>
                         <div className="flex-grow">
