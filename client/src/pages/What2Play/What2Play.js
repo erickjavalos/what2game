@@ -22,7 +22,7 @@ const What2Play = () => {
         { value: 'action', label: 'Action' },
         { value: 'adventure', label: 'Adventure' },
         { value: 'strategy', label: 'Strategy' },
-        { value: 'rpg', label: 'RPG' },
+        { value: 'role-playing-games-rpg', label: 'RPG' },
         { value: 'simulation', label: 'Simulation' },
         { value: 'sports', label: 'Sports' },
       ],
