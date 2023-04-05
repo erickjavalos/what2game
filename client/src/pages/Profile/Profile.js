@@ -10,9 +10,9 @@ const Profile = () => {
 
   const { loading, data } = useQuery(QUERY_ME);
   console.log('queried')
-  // console.log(data)
+  console.log(data)
 
-  const liked = data?.me
+  const liked = data?.me || []
   // console.log(liked.likes)
   if (loading) {
     return <div>Loading...</div>;
