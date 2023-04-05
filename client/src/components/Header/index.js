@@ -29,7 +29,7 @@ const Header = () => {
   return (
     <>
     <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5" style={{backgroundColor: 'rgb(130, 2, 99)'}}>
-        <div className="flex flex-wrap justify-between items-center mx-auto">
+        <div className="flex flex-row justify-between items-center mx-auto">
           {/* logo */}
           {/* <Link className="text-light items-center"  onClick={refreshHome}> */}
           <Link className="text-light items-center"  onClick={refreshHome}>
@@ -50,7 +50,7 @@ const Header = () => {
           </div>
 
           {/* login buttons*/}
-          <div className="flex items-center lg:order-2">
+          <div className="flex flex-row justify-items-center items-center lg:order-2">
 
             {Auth.loggedIn() ? (
             <>
@@ -74,18 +74,18 @@ const Header = () => {
             </>
             ) : (
               <>
-              <Link className="text-light items-center" to="/api/games">
+              <Link className="text-light self-center" to="/api/games">
                 <button className="bg-[rgb(234,222,218)] hover:bg-[rgb(46,41,78)] text-black hover:text-[rgb(234,222,218)] font-bold py-2 px-4 rounded-full mx-2">
                   what2play
                 </button>
               </Link>
-              <Link className="text-light items-center" to="/login">
-                <button className="bg-[rgb(234,222,218)] hover:bg-[rgb(46,41,78)] text-black hover:text-[rgb(234,222,218)] font-bold py-2 px-4 rounded-full mx-2">
+              <Link className="self-center text-light" to="/login">
+                <button className="headerButton bg-[rgb(234,222,218)] hover:bg-[rgb(46,41,78)] text-black hover:text-[rgb(234,222,218)] font-bold py-2 px-4 rounded-full mx-2">
                   Log in
                 </button>
               </Link>
-              <Link className="text-light items-center" to="/signup">
-                <button className="bg-[rgb(234,222,218)] hover:bg-[rgb(46,41,78)] text-black hover:text-[rgb(234,222,218)] font-bold py-2 px-4 rounded-full mx-2">
+              <Link className="self-center text-light" to="/signup">
+                <button className="headerButton bg-[rgb(234,222,218)] hover:bg-[rgb(46,41,78)] text-black hover:text-[rgb(234,222,218)] font-bold py-2 px-4 rounded-full mx-2">
                   Sign up
                 </button>
               </Link>
