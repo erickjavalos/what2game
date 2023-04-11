@@ -60,6 +60,8 @@ What2Game is a React app designed to help users find the perfect game to play. U
 
    * To use What2Game, simply navigate to the website, create an account or log in, and start exploring the features to find the perfect game for you.
 
+Live deployment: [what2game](https://what2game.herokuapp.com/)
+
 ## Sample
 ![Desktop Screenshot 2023 04 04 - 23 23 09 53](https://user-images.githubusercontent.com/110849412/230000044-1eefcf39-838b-4f80-ad2b-a686b1e9ec98.png)
 
